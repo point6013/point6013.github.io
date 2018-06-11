@@ -308,7 +308,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/11/Hello-hexo/" itemprop="url">Hello hexo</a></h1>
+                <a class="post-title-link" href="/2018/06/11/Hello-hexo/" itemprop="url">Bagging和Boosting的概念与区别</a></h1>
         
 
         <div class="post-meta">
@@ -363,16 +363,16 @@
             <h2 id="Bagging和Boosting的概念与区别"><a href="#Bagging和Boosting的概念与区别" class="headerlink" title="Bagging和Boosting的概念与区别"></a>Bagging和Boosting的概念与区别</h2><hr>
 <h4 id="随机森林属于集成学习-ensemble-learning-中的bagging算法，在集成算法中主要分为bagging算法与boosting算法，"><a href="#随机森林属于集成学习-ensemble-learning-中的bagging算法，在集成算法中主要分为bagging算法与boosting算法，" class="headerlink" title="随机森林属于集成学习(ensemble learning)中的bagging算法，在集成算法中主要分为bagging算法与boosting算法，"></a>随机森林属于集成学习(ensemble learning)中的bagging算法，在集成算法中主要分为bagging算法与boosting算法，</h4><h4 id="Bagging算法-套袋发，bootstrap-aggregating"><a href="#Bagging算法-套袋发，bootstrap-aggregating" class="headerlink" title="Bagging算法(套袋发，bootstrap aggregating)"></a>Bagging算法(套袋发，bootstrap aggregating)</h4><ul>
 <li>bagging的算法过程如下：<ol>
-<li>从原始样本集中使用Bootstraping 方法随机抽取n个训练样本，共进行k轮抽取，得到k个训练集（k个训练集之间相互独立，元素可以有重复）。<ol start="2">
+<li>从原始样本集中使用Bootstraping 方法随机抽取n个训练样本，共进行k轮抽取，得到k个训练集（k个训练集之间相互独立，元素可以有重复）。</li>
 <li>对于n个训练集，我们训练k个模型，（这个模型可根据具体的情况而定，可以是决策树，knn等）</li>
 <li>对于分类问题：由投票表决产生的分类结果；对于回归问题，由k个模型预测结果的均值作为最后预测的结果（所有模型的重要性相同）。<h4 id="Boosting（提升法）"><a href="#Boosting（提升法）" class="headerlink" title="Boosting（提升法）"></a>Boosting（提升法）</h4></li>
 </ol>
-<ul>
+</li>
 <li>boosting的算法过程如下： <ol>
 <li>对于训练集中的每个样本建立权值wi，表示对每个样本的权重， 其关键在与对于被错误分类的样本权重会在下一轮的分类中获得更大的权重（错误分类的样本的权重增加）。</li>
 <li>同时加大分类 误差概率小的弱分类器的权值，使其在表决中起到更大的作用，减小分类误差率较大弱分类器的权值，使其在表决中起到较小的作用。每一次迭代都得到一个弱分类器，需要使用某种策略将其组合，最为最终模型，(adaboost给每个迭代之后的弱分类器一个权值，将其线性组合作为最终的分类器,误差小的分类器权值越大。)<h4 id="Bagging和Boosting-的主要区别"><a href="#Bagging和Boosting-的主要区别" class="headerlink" title="Bagging和Boosting 的主要区别"></a>Bagging和Boosting 的主要区别</h4></li>
 </ol>
-<ul>
+</li>
 <li>样本选择上: Bagging采取Bootstraping的是随机有放回的取样，Boosting的每一轮训练的样本是固定的，改变的是每个样的权重。</li>
 <li>样本权重上：<strong>Bagging采取的是均匀取样，且每个样本的权重相同</strong>，Boosting根据错误率调整样本权重，错误率越大的样本权重会变大</li>
 <li>预测函数上：<strong>Bagging所以的预测函数权值相同</strong>，Boosting中误差越小的预测函数其权值越大。</li>
@@ -385,12 +385,6 @@
 <li>信息增益是属性选择中一个重要指标，它定义为一个属性能够为分类系统带来的多少信息，带来的信息越多，该属性就越重要，而信息量，就是熵。</li>
 <li>熵的定义是信息量的期望值，熵越大，一个变量的不确定性越大，它带来的信息量就越大，计算信息熵的公式为：<img src="https://github.com/KeKe-Li/tutorial/raw/master/assets/images/176.jpg" alt="">，其中，p为出现c分类时的概率。</li>
 <li>如何计算一个属性的信息增益？</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-</li>
 </ul>
 
           
