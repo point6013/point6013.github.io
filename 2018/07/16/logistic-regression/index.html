@@ -103,7 +103,7 @@
 <meta property="og:image" content="http://wx2.sinaimg.cn/mw690/0060lm7Tly1ftc42cfb1aj30gp0533yr.jpg">
 <meta property="og:image" content="http://wx1.sinaimg.cn/mw690/0060lm7Tly1ftc4m2t1e8j307z015dfn.jpg">
 <meta property="og:image" content="http://wx2.sinaimg.cn/mw690/0060lm7Tly1ftc4pl81xyj30av01aglg.jpg">
-<meta property="og:updated_time" content="2018-07-16T16:54:36.561Z">
+<meta property="og:updated_time" content="2018-07-16T16:58:30.540Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="logistic regression">
 <meta name="twitter:description" content="第三章 使用sklearn 实现机学习的分类算法分类算法 分类器的性能与计算能力和预测性能很大程度上取决于用于模型训练的数据 训练机器学习算法的五个步骤： 特征的选择 确定评价性能的标准 选择分类器及其优化算法 对模型性能的评估 算法的调优">
@@ -429,7 +429,7 @@
 </ul>
 <h3 id="几率比（odd-ratio）"><a href="#几率比（odd-ratio）" class="headerlink" title="几率比（odd ratio）"></a>几率比（odd ratio）</h3><p>特定的事件的发生的几率，用数学公式表示为：$\frac{p}{1-p} $，其中p为正事件的概率，不一定是有利的事件，而是我们将要预测的事件。以一个患者患有某种疾病的概率，我们可以将正事件的类标标记为y=1。<br><img src="http://wx4.sinaimg.cn/mw690/0060lm7Tly1ftbjl34vj9j30in06b74o.jpg" alt="如图"></p>
 <ul>
-<li>也就是样本特征与权重的线性组合，其计算公式：<br>  z=w·x</li>
+<li>也就是样本特征与权重的线性组合，其计算公式：<br>  z = w·x + b</li>
 <li>预测得到的概率可以通过一个量化器（单位阶跃函数）简单的转化为二元输出</li>
 <li>如果y＞0.5 则判断该样本类别为1，如y＜0.5，则判定该样本是其他类别。</li>
 <li>对应上面的展开式，如果z≥0，则判断类别是1，否则是其他。</li>
