@@ -103,7 +103,7 @@
 <meta property="og:image" content="http://wx2.sinaimg.cn/mw690/0060lm7Tly1ftc42cfb1aj30gp0533yr.jpg">
 <meta property="og:image" content="http://wx1.sinaimg.cn/mw690/0060lm7Tly1ftc4m2t1e8j307z015dfn.jpg">
 <meta property="og:image" content="http://wx2.sinaimg.cn/mw690/0060lm7Tly1ftc4pl81xyj30av01aglg.jpg">
-<meta property="og:updated_time" content="2018-07-16T15:56:11.185Z">
+<meta property="og:updated_time" content="2018-07-16T15:57:15.754Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="logistic regression">
 <meta name="twitter:description" content="第三章 使用sklearn 实现机学习的分类算法分类算法 分类器的性能与计算能力和预测性能很大程度上取决于用于模型训练的数据 训练机器学习算法的五个步骤： 特征的选择 确定评价性能的标准 选择分类器及其优化算法 对模型性能的评估 算法的调优">
@@ -447,8 +447,7 @@
 <li>判定某个样本属于类别1或者0 的条件概率如下：<br><img src="http://wx4.sinaimg.cn/mw690/0060lm7Tly1ftbko85i86j30ed03dmxk.jpg" alt=""></li>
 <li>逻辑回回归的代价函数是最小二乘损失函数<br><img src="https://s1.ax1x.com/2018/07/16/PQBB5D.png" alt="PQBB5D.png"></li>
 <li>为了推导出逻辑斯蒂回归的代价函数，需要先定义一个极大似然函数L,<br><img src="http://wx2.sinaimg.cn/mw690/0060lm7Tly1ftc1tr86pvj30be01pdfn.jpg" alt=""></li>
-<li>用极大似然估计来根据给定的训练集估计出参数w,对上式两边取对数，化简为</li>
-<li><img src="http://wx2.sinaimg.cn/mw690/0060lm7Tly1ftc1ycsz6hj30dg0123yd.jpg" alt=""><br>求极大似然函数的最大值等价于求-l(w)的最小值，即：<br><img src="http://wx2.sinaimg.cn/mw690/0060lm7Tly1ftc2jimakjj30e101kwec.jpg" alt=""><h3 id="利用梯度下降法求参数"><a href="#利用梯度下降法求参数" class="headerlink" title="利用梯度下降法求参数"></a>利用梯度下降法求参数</h3></li>
+<li>用极大似然估计来根据给定的训练集估计出参数w,对上式两边取对数，化简为<br><img src="http://wx2.sinaimg.cn/mw690/0060lm7Tly1ftc1ycsz6hj30dg0123yd.jpg" alt=""><br>求极大似然函数的最大值等价于求-l(w)的最小值，即：<br><img src="http://wx2.sinaimg.cn/mw690/0060lm7Tly1ftc2jimakjj30e101kwec.jpg" alt=""><h3 id="利用梯度下降法求参数"><a href="#利用梯度下降法求参数" class="headerlink" title="利用梯度下降法求参数"></a>利用梯度下降法求参数</h3></li>
 <li>在开始梯度下降之前，sigmoid function有一个很好的性质，<br><img src="http://wx1.sinaimg.cn/mw690/0060lm7Tly1ftc2zhxk86j307101nt8h.jpg" alt=""><br>梯度的负方向就是代价函数下降最快的方向，借助泰勒展开，可以得到（函数可微，可导）<br><img src="http://wx3.sinaimg.cn/mw690/0060lm7Tly1ftc33bmu45j306q00wa9u.jpg" alt=""><br>其中，f’(x) 和δ为向量，那么这两者的内积就等于<br><img src="http://wx4.sinaimg.cn/mw690/0060lm7Tly1ftc36jdvpzj308g018mwy.jpg" alt=""><br>当θ=π时，也就是在δ的f’(x)的负方向时，取得最小值， 也就是下降的最快的方向了<br><img src="http://wx1.sinaimg.cn/mw690/0060lm7Tly1ftc3wrla2qj307j01f742.jpg" alt=""><br>也就是<br><img src="http://wx2.sinaimg.cn/mw690/0060lm7Tly1ftc3yrla04j308101gq2q.jpg" alt=""></li>
 <li>其中，wj表示第j个特征的权重，η为学习率，用来控制步长。</li>
 <li>对损失函数J(θ)中的θ的第j个权重求偏导，<img src="http://wx2.sinaimg.cn/mw690/0060lm7Tly1ftc42cfb1aj30gp0533yr.jpg" alt=""><br>所以，在使用梯度下降法更新权重时，只要根据公式<br><img src="http://wx1.sinaimg.cn/mw690/0060lm7Tly1ftc4m2t1e8j307z015dfn.jpg" alt=""><br>当样本量极大的时候，每次更新权重需要耗费大量的算力，这时可以采取随机梯度下降法，这时，每次迭代的时候需要将样本重新打乱，然后用下面的式子更新权重<br><img src="http://wx2.sinaimg.cn/mw690/0060lm7Tly1ftc4pl81xyj30av01aglg.jpg" alt=""></li>
