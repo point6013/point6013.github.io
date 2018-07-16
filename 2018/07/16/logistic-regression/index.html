@@ -103,7 +103,7 @@
 <meta property="og:image" content="http://wx2.sinaimg.cn/mw690/0060lm7Tly1ftc42cfb1aj30gp0533yr.jpg">
 <meta property="og:image" content="http://wx1.sinaimg.cn/mw690/0060lm7Tly1ftc4m2t1e8j307z015dfn.jpg">
 <meta property="og:image" content="http://wx2.sinaimg.cn/mw690/0060lm7Tly1ftc4pl81xyj30av01aglg.jpg">
-<meta property="og:updated_time" content="2018-07-16T15:51:22.456Z">
+<meta property="og:updated_time" content="2018-07-16T15:52:38.623Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="logistic regression">
 <meta name="twitter:description" content="第三章 使用sklearn 实现机学习的分类算法分类算法 分类器的性能与计算能力和预测性能很大程度上取决于用于模型训练的数据 训练机器学习算法的五个步骤： 特征的选择 确定评价性能的标准 选择分类器及其优化算法 对模型性能的评估 算法的调优">
@@ -435,7 +435,7 @@
 <ul>
 <li>很多情况下，我们会将逻辑回归的输出映射到二元分类问题的解决方案，需要确保逻辑回归的输出始终落在在0-1之间，此时S型函数的输出值正好满足了这个条件，其中：<br><img src="http://wx1.sinaimg.cn/mw690/0060lm7Tly1ftbjqo8f7rj30ai021gld.jpg" alt=""></li>
 </ul>
-<p>####几率比（odd ratio）<br>特定的事件的发生的几率，用数学公式表示为：$\frac{p}{1-p} $，其中p为正事件的概率，不一定是有利的事件，而是我们将要预测的事件。以一个患者患有某种疾病的概率，我们可以将正事件的类标标记为y=1。<br><img src="http://wx4.sinaimg.cn/mw690/0060lm7Tly1ftbjl34vj9j30in06b74o.jpg" alt="如图"></p>
+<h4 id="几率比（odd-ratio）"><a href="#几率比（odd-ratio）" class="headerlink" title="几率比（odd ratio）"></a>几率比（odd ratio）</h4><p>特定的事件的发生的几率，用数学公式表示为：$\frac{p}{1-p} $，其中p为正事件的概率，不一定是有利的事件，而是我们将要预测的事件。以一个患者患有某种疾病的概率，我们可以将正事件的类标标记为y=1。<br><img src="http://wx4.sinaimg.cn/mw690/0060lm7Tly1ftbjl34vj9j30in06b74o.jpg" alt="如图"></p>
 <ul>
 <li>也就是样本特征与权重的线性组合，其计算公式：<br>  z=w^T</li>
 <li>预测得到的概率可以通过一个量化器（单位阶跃函数）简单的转化为二元输出</li>
@@ -630,7 +630,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第三章-使用sklearn-实现机学习的分类算法"><span class="nav-number">1.</span> <span class="nav-text">第三章 使用sklearn 实现机学习的分类算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类算法"><span class="nav-number">1.1.</span> <span class="nav-text">分类算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sklearn初步使用"><span class="nav-number">1.2.</span> <span class="nav-text">sklearn初步使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过拟合现象"><span class="nav-number">1.3.</span> <span class="nav-text">过拟合现象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑斯谛回归"><span class="nav-number">1.4.</span> <span class="nav-text">逻辑斯谛回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过逻辑斯谛回归模型的代价函数获得权重"><span class="nav-number">1.5.</span> <span class="nav-text">通过逻辑斯谛回归模型的代价函数获得权重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用梯度下降法求参数"><span class="nav-number">1.6.</span> <span class="nav-text">利用梯度下降法求参数</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第三章-使用sklearn-实现机学习的分类算法"><span class="nav-number">1.</span> <span class="nav-text">第三章 使用sklearn 实现机学习的分类算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#分类算法"><span class="nav-number">1.1.</span> <span class="nav-text">分类算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sklearn初步使用"><span class="nav-number">1.2.</span> <span class="nav-text">sklearn初步使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过拟合现象"><span class="nav-number">1.3.</span> <span class="nav-text">过拟合现象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#逻辑斯谛回归"><span class="nav-number">1.4.</span> <span class="nav-text">逻辑斯谛回归</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#几率比（odd-ratio）"><span class="nav-number">1.4.1.</span> <span class="nav-text">几率比（odd ratio）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过逻辑斯谛回归模型的代价函数获得权重"><span class="nav-number">1.5.</span> <span class="nav-text">通过逻辑斯谛回归模型的代价函数获得权重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用梯度下降法求参数"><span class="nav-number">1.6.</span> <span class="nav-text">利用梯度下降法求参数</span></a></li></ol></li></ol></div>
             
 
           </div>
