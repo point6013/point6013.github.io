@@ -93,7 +93,7 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bly1ftuo1ogfioj20vd0bw3zt.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bly1ftuo34c4tlj214308m75j.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bly1ftuo34c4tlj214308m75j.jpg">
-<meta property="og:updated_time" content="2018-08-01T16:34:37.957Z">
+<meta property="og:updated_time" content="2018-08-01T16:37:57.049Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据类型转化">
 <meta name="twitter:description" content="数据处理过程的数据类型 当利用pandas进行数据处理的时候，经常会遇到数据类型的问题，当拿到数据的时候，首先需要确定拿到的是正确类型的数据，一般通过数据类型的转化，这篇文章就介绍pandas里面的数据类型（data types也就是常用的dtyps），以及pandas与numpy之间的数据对应关系。  主要介绍object，int64，float64，datetime64，bool等几种类型，c">
@@ -452,6 +452,7 @@
 </ul>
 <h4 id="数据类型的问题一般都是出了问题之后才会发现的，所以有了一些经验之后就会拿到数据之后，就直接看数据类型，是否与自己想要处理的数据格式一致，这样可以从一开始避免一些尴尬的问题出现。那么我们以一个简单的例子，利用jupyter-notebook进行一个数据类型的介绍。"><a href="#数据类型的问题一般都是出了问题之后才会发现的，所以有了一些经验之后就会拿到数据之后，就直接看数据类型，是否与自己想要处理的数据格式一致，这样可以从一开始避免一些尴尬的问题出现。那么我们以一个简单的例子，利用jupyter-notebook进行一个数据类型的介绍。" class="headerlink" title="数据类型的问题一般都是出了问题之后才会发现的，所以有了一些经验之后就会拿到数据之后，就直接看数据类型，是否与自己想要处理的数据格式一致，这样可以从一开始避免一些尴尬的问题出现。那么我们以一个简单的例子，利用jupyter notebook进行一个数据类型的介绍。"></a>数据类型的问题一般都是出了问题之后才会发现的，所以有了一些经验之后就会拿到数据之后，就直接看数据类型，是否与自己想要处理的数据格式一致，这样可以从一开始避免一些尴尬的问题出现。那么我们以一个简单的例子，利用jupyter notebook进行一个数据类型的介绍。</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">####按照惯例导入两个常用的数据处理的包，numpy与pandas</span></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="comment"># 从csv文件读取数据，数据表格中只有5行，里面包含了float，string，int三种数据python类型，也就是分别对应的pandas的float64，object，int64</span></span><br><span class="line"><span class="comment"># csv文件中共有六列，第一列是表头，其余是数据。</span></span><br><span class="line">df = pd.read_csv(<span class="string">"sales_data_types.csv"</span>)</span><br><span class="line">print(df)</span><br></pre></td></tr></table></figure>
 <p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bly1ftunyo12lpj20uu0cp3zy.jpg" alt=""></p>
+<a id="more"></a>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.dtypes</span><br></pre></td></tr></table></figure>
 <pre><code>Customer Number    float64
 Customer Name       object
