@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="boosting,集成算法," />
+  <meta name="keywords" content="data processing,pandas," />
 
 
 
@@ -79,20 +79,27 @@
 
 
 
-<meta name="description" content="Bagging和Boosting的概念与区别随机森林属于集成学习(ensemble learning)中的bagging算法，在集成算法中主要分为bagging算法与boosting算法 Bagging算法(套袋法，bootstrap aggregating) bagging的算法过程如下： 从原始样本集中使用Bootstraping 方法随机抽取n个训练样本，共进行k轮抽取，得到k个训练集（k个">
-<meta name="keywords" content="boosting,集成算法">
+<meta name="description" content="category type data in pandas 实际应用pandas过程中，经常会用到category数据类型，通常以text的形式显示，包括颜色（红，绿，蓝），尺寸的大小（大，中，小），还有地理信息等（国家，省份），这些数据的处理经常会有各种各样的问题，pandas以及scikit-learn两个包可以将category数据转化为合适的数值型格式，这篇主要介绍通过这两个包处理categ">
+<meta name="keywords" content="data processing,pandas">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Bagging和Boosting的概念与区别">
-<meta property="og:url" content="http://yoursite.com/2018/06/11/Hello-hexo/index.html">
+<meta property="og:title" content="pandas data processing">
+<meta property="og:url" content="http://yoursite.com/2018/08/02/data-processing-pandas/index.html">
 <meta property="og:site_name" content="Friedman&#39;s blog">
-<meta property="og:description" content="Bagging和Boosting的概念与区别随机森林属于集成学习(ensemble learning)中的bagging算法，在集成算法中主要分为bagging算法与boosting算法 Bagging算法(套袋法，bootstrap aggregating) bagging的算法过程如下： 从原始样本集中使用Bootstraping 方法随机抽取n个训练样本，共进行k轮抽取，得到k个训练集（k个">
+<meta property="og:description" content="category type data in pandas 实际应用pandas过程中，经常会用到category数据类型，通常以text的形式显示，包括颜色（红，绿，蓝），尺寸的大小（大，中，小），还有地理信息等（国家，省份），这些数据的处理经常会有各种各样的问题，pandas以及scikit-learn两个包可以将category数据转化为合适的数值型格式，这篇主要介绍通过这两个包处理categ">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://github.com/KeKe-Li/tutorial/raw/master/assets/images/176.jpg">
-<meta property="og:updated_time" content="2018-07-11T15:25:34.241Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvf3plqefj215n0ci75u.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvf4zyk7fj215q0aomyh.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvf5ra63gj215k04emxn.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvf702rzrj215k0anabc.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvfh4tpzuj213p0au3zi.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvf9zuskxj20z90axq3j.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvfbg1lg1j210n0aymxn.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvfe3f1ybj20ky07w74l.jpg">
+<meta property="og:updated_time" content="2018-08-02T08:22:09.215Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Bagging和Boosting的概念与区别">
-<meta name="twitter:description" content="Bagging和Boosting的概念与区别随机森林属于集成学习(ensemble learning)中的bagging算法，在集成算法中主要分为bagging算法与boosting算法 Bagging算法(套袋法，bootstrap aggregating) bagging的算法过程如下： 从原始样本集中使用Bootstraping 方法随机抽取n个训练样本，共进行k轮抽取，得到k个训练集（k个">
-<meta name="twitter:image" content="https://github.com/KeKe-Li/tutorial/raw/master/assets/images/176.jpg">
+<meta name="twitter:title" content="pandas data processing">
+<meta name="twitter:description" content="category type data in pandas 实际应用pandas过程中，经常会用到category数据类型，通常以text的形式显示，包括颜色（红，绿，蓝），尺寸的大小（大，中，小），还有地理信息等（国家，省份），这些数据的处理经常会有各种各样的问题，pandas以及scikit-learn两个包可以将category数据转化为合适的数值型格式，这篇主要介绍通过这两个包处理categ">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvf3plqefj215n0ci75u.jpg">
 
 
 
@@ -122,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/06/11/Hello-hexo/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/08/02/data-processing-pandas/"/>
 
 
 
 
 
-  <title>Bagging和Boosting的概念与区别 | Friedman's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>pandas data processing | Friedman's blog</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -309,7 +316,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/Hello-hexo/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/02/data-processing-pandas/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Friedman">
@@ -326,7 +333,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Bagging和Boosting的概念与区别</h1>
+          <h1 class="post-title" itemprop="name headline">pandas data processing</h1>
         
 
         <div class="post-meta">
@@ -338,8 +345,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-11T23:31:23+08:00">
-                2018-06-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-02T16:00:37+08:00">
+                2018-08-02
               </time>
             
 
@@ -361,8 +368,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ensemble-method/" itemprop="url" rel="index">
-                    <span itemprop="name">ensemble method</span>
+                  <a href="/categories/pandas/" itemprop="url" rel="index">
+                    <span itemprop="name">pandas</span>
                   </a>
                 </span>
 
@@ -392,7 +399,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  887 字
+                  1,362 字
                 </span>
               
 
@@ -408,7 +415,7 @@
                   <span class="post-meta-item-text">阅读时长&asymp;</span>
                 
                 <span title="阅读时长">
-                  3 分钟
+                  6 分钟
                 </span>
               
             </div>
@@ -429,41 +436,118 @@
       
 
       
-        <h2 id="Bagging和Boosting的概念与区别"><a href="#Bagging和Boosting的概念与区别" class="headerlink" title="Bagging和Boosting的概念与区别"></a>Bagging和Boosting的概念与区别</h2><h3 id="随机森林属于集成学习-ensemble-learning-中的bagging算法，在集成算法中主要分为bagging算法与boosting算法"><a href="#随机森林属于集成学习-ensemble-learning-中的bagging算法，在集成算法中主要分为bagging算法与boosting算法" class="headerlink" title="随机森林属于集成学习(ensemble learning)中的bagging算法，在集成算法中主要分为bagging算法与boosting算法"></a>随机森林属于集成学习(ensemble learning)中的bagging算法，在集成算法中主要分为bagging算法与boosting算法</h3><hr>
-<h4 id="Bagging算法-套袋法，bootstrap-aggregating"><a href="#Bagging算法-套袋法，bootstrap-aggregating" class="headerlink" title="Bagging算法(套袋法，bootstrap aggregating)"></a>Bagging算法(套袋法，bootstrap aggregating)</h4><ul>
-<li>bagging的算法过程如下：</li>
-<li>从原始样本集中使用Bootstraping 方法随机抽取n个训练样本，共进行k轮抽取，得到k个训练集（k个训练集之间相互独立，元素可以有重复）。</li>
-<li>对于n个训练集，我们训练k个模型，（这个模型可根据具体的情况而定，可以是决策树，knn等）</li>
-<li>对于分类问题：由投票表决产生的分类结果；对于回归问题，由k个模型预测结果的均值作为最后预测的结果（所有模型的重要性相同）。</li>
+        <h3 id="category-type-data-in-pandas"><a href="#category-type-data-in-pandas" class="headerlink" title="category type data in pandas"></a>category type data in pandas</h3><ul>
+<li>实际应用pandas过程中，经常会用到category数据类型，通常以text的形式显示，包括颜色（红，绿，蓝），尺寸的大小（大，中，小），还有地理信息等（国家，省份），这些数据的处理经常会有各种各样的问题，pandas以及scikit-learn两个包可以将category数据转化为合适的数值型格式，这篇主要介绍通过这两个包处理category类型的数据转化为数值类型，也就是encoding的过程。</li>
+<li>数据来源<a href="http://mlr.cs.umass.edu/ml/index.html" target="_blank" rel="noopener">UCI Machine Learning Repository</a>，这个数据集中包含了很多的category类型的数据，可以从链接汇总查看数据的代表的含义。</li>
+<li>下面开始导入需要用到的包</li>
 </ul>
-<a id="more"></a>
-<h4 id="Boosting（提升法）"><a href="#Boosting（提升法）" class="headerlink" title="Boosting（提升法）"></a>Boosting（提升法）</h4><ul>
-<li>boosting的算法过程如下： </li>
-<li>对于训练集中的每个样本建立权值wi，表示对每个样本的权重， 其关键在与对于被错误分类的样本权重会在下一轮的分类中获得更大的权重（错误分类的样本的权重增加）。</li>
-<li>同时加大分类 误差概率小的弱分类器的权值，使其在表决中起到更大的作用，减小分类误差率较大弱分类器的权值，使其在表决中起到较小的作用。每一次迭代都得到一个弱分类器，需要使用某种策略将其组合，最为最终模型，(adaboost给每个迭代之后的弱分类器一个权值，将其线性组合作为最终的分类器,误差小的分类器权值越大。)</li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 规定一下数据列的各个名称，</span></span><br><span class="line">headers = [<span class="string">"symboling"</span>, <span class="string">"normalized_losses"</span>, <span class="string">"make"</span>, <span class="string">"fuel_type"</span>, <span class="string">"aspiration"</span>,</span><br><span class="line">           <span class="string">"num_doors"</span>, <span class="string">"body_style"</span>, <span class="string">"drive_wheels"</span>, <span class="string">"engine_location"</span>,</span><br><span class="line">           <span class="string">"wheel_base"</span>, <span class="string">"length"</span>, <span class="string">"width"</span>, <span class="string">"height"</span>, <span class="string">"curb_weight"</span>,</span><br><span class="line">           <span class="string">"engine_type"</span>, <span class="string">"num_cylinders"</span>, <span class="string">"engine_size"</span>, <span class="string">"fuel_system"</span>,</span><br><span class="line">           <span class="string">"bore"</span>, <span class="string">"stroke"</span>, <span class="string">"compression_ratio"</span>, <span class="string">"horsepower"</span>, <span class="string">"peak_rpm"</span>,</span><br><span class="line">           <span class="string">"city_mpg"</span>, <span class="string">"highway_mpg"</span>, <span class="string">"price"</span>]</span><br><span class="line"><span class="comment"># 从pandas导入csv文件，将?标记为NaN缺失值</span></span><br><span class="line">df=pd.read_csv(<span class="string">"http://mlr.cs.umass.edu/ml/machine-learning-databases/autos/imports-85.data"</span>,header=<span class="keyword">None</span>,names=headers,na_values=<span class="string">"?"</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvf3plqefj215n0ci75u.jpg" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.dtypes</span><br></pre></td></tr></table></figure>
+<pre><code>symboling              int64
+normalized_losses    float64
+make                  object
+fuel_type             object
+aspiration            object
+num_doors             object
+body_style            object
+drive_wheels          object
+engine_location       object
+wheel_base           float64
+length               float64
+width                float64
+height               float64
+curb_weight            int64
+engine_type           object
+num_cylinders         object
+engine_size            int64
+fuel_system           object
+bore                 float64
+stroke               float64
+compression_ratio    float64
+horsepower           float64
+peak_rpm             float64
+city_mpg               int64
+highway_mpg            int64
+price                float64
+dtype: object
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果只关注category 类型的数据，其实根本没有必要拿到这些全部数据，只需要将object类型的数据取出，然后进行后续分析即可</span></span><br><span class="line">obj_df = df.select_dtypes(include=[<span class="string">'object'</span>]).copy()</span><br><span class="line">obj_df.head()</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvf4zyk7fj215q0aomyh.jpg" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  在进行下一步处理的之前，需要将数据进行缺失值的处理，对列进行处理axis=1</span></span><br><span class="line">obj_df[obj_df.isnull().any(axis=<span class="number">1</span>)]</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvf5ra63gj215k04emxn.jpg" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 处理缺失值的方式有很多种，根据项目的不同或者填补缺失值或者去掉该样本。本文中的数据缺失用该列的众数来补充。</span></span><br><span class="line">obj_df.num_doors.value_counts()</span><br></pre></td></tr></table></figure>
+<pre><code>four    114
+two      89
+Name: num_doors, dtype: int64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obj_df=obj_df.fillna(&#123;<span class="string">"num_doors"</span>:<span class="string">"four"</span>&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="在处理完缺失值之后，有以下几种方式进行category数据转化encoding"><a href="#在处理完缺失值之后，有以下几种方式进行category数据转化encoding" class="headerlink" title="在处理完缺失值之后，有以下几种方式进行category数据转化encoding"></a>在处理完缺失值之后，有以下几种方式进行category数据转化encoding</h3><ul>
+<li>Find and Replace</li>
+<li>label encoding</li>
+<li>One Hot encoding </li>
+<li>Custom Binary encoding</li>
+<li>sklearn</li>
+<li>advanced Approaches</li>
 </ul>
-<h4 id="Bagging和Boosting-的主要区别"><a href="#Bagging和Boosting-的主要区别" class="headerlink" title="Bagging和Boosting 的主要区别"></a>Bagging和Boosting 的主要区别</h4><ul>
-<li>样本选择上: Bagging采取Bootstraping的是随机有放回的取样，Boosting的每一轮训练的样本是固定的，改变的是每个样的权重。</li>
-<li>样本权重上：<strong>Bagging采取的是均匀取样，且每个样本的权重相同</strong>，Boosting根据错误率调整样本权重，错误率越大的样本权重会变大</li>
-<li>预测函数上：<strong>Bagging所以的预测函数权值相同</strong>，Boosting中误差越小的预测函数其权值越大。</li>
-<li>并行计算: Bagging 的各个预测函数可以并行生成;Boosting的各个预测函数必须按照顺序迭代生成.</li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  pandas里面的replace文档非常丰富，笔者在使用该功能时候，深感其参数众多，深感提供的功能也非常的强大</span></span><br><span class="line"><span class="comment"># 本文中使用replace的功能，创建map的字典，针对需要数据清理的列进行清理更加方便，例如：</span></span><br><span class="line">cleanup_nums= &#123;</span><br><span class="line">    <span class="string">"num_doors"</span>:&#123;<span class="string">"four"</span>:<span class="number">4</span>,<span class="string">"two"</span>:<span class="number">2</span>&#125;,</span><br><span class="line">    <span class="string">"num_cylinders"</span>:&#123;</span><br><span class="line">        <span class="string">"four"</span>:<span class="number">4</span>,<span class="string">"six"</span>:<span class="number">6</span>,<span class="string">"five"</span>:<span class="number">5</span>,<span class="string">"eight"</span>:<span class="number">8</span>,<span class="string">"two"</span>:<span class="number">2</span>,<span class="string">"twelve"</span>:<span class="number">12</span>,<span class="string">"three"</span>:<span class="number">3</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj_df.replace(cleanup_nums,inplace=<span class="keyword">True</span>)</span><br><span class="line">obj_df.head()</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvf702rzrj215k0anabc.jpg" alt=""></p>
+<h4 id="label-encoding-是将一组无规则的，没有大小比较的数据转化为数字"><a href="#label-encoding-是将一组无规则的，没有大小比较的数据转化为数字" class="headerlink" title="label encoding 是将一组无规则的，没有大小比较的数据转化为数字"></a>label encoding 是将一组无规则的，没有大小比较的数据转化为数字</h4><ul>
+<li>比如body_style 字段中含有多个数据值，可以使用该方法将其转化</li>
+<li>convertible &gt; 0</li>
+<li>hardtop  &gt; 1</li>
+<li>hatchback  &gt; 2</li>
+<li>sedan &gt; 3</li>
+<li>wagon &gt; 4</li>
 </ul>
-<h4 id="将决策树与以上框架组合成新的算法"><a href="#将决策树与以上框架组合成新的算法" class="headerlink" title="将决策树与以上框架组合成新的算法"></a>将决策树与以上框架组合成新的算法</h4><ul>
-<li>Bagging + 决策树 = 随机森林</li>
-<li>AdaBoost + 决策树 = 提升树</li>
-<li>gradient + 决策树 = （梯度提升树）GDBT </li>
+<h4 id="这种方式就像是密码编码一样，这，个比喻很有意思，就像之前看电影，记得一句台词，他们俩亲密的像做贼一样"><a href="#这种方式就像是密码编码一样，这，个比喻很有意思，就像之前看电影，记得一句台词，他们俩亲密的像做贼一样" class="headerlink" title="这种方式就像是密码编码一样，这，个比喻很有意思，就像之前看电影，记得一句台词，他们俩亲密的像做贼一样"></a>这种方式就像是密码编码一样，这，个比喻很有意思，就像之前看电影，记得一句台词，他们俩亲密的像做贼一样</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通过pandas里面的 category数据类型，可以很方便的或者该编码</span></span><br><span class="line">obj_df[<span class="string">"body_style"</span>]=obj_df[<span class="string">"body_style"</span>].astype(<span class="string">"category"</span>)</span><br><span class="line">obj_df.dtypes</span><br></pre></td></tr></table></figure>
+<pre><code>make                 object
+fuel_type            object
+aspiration           object
+num_doors             int64
+body_style         category
+drive_wheels         object
+engine_location      object
+engine_type          object
+num_cylinders         int64
+fuel_system          object
+dtype: object
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 我们可以通过赋值新的列，保存其对应的code</span></span><br><span class="line"><span class="comment"># 通过这种方法可以舒服的数据，便于以后的数据分析以及整理</span></span><br><span class="line">obj_df[<span class="string">"body_style_code"</span>] = obj_df[<span class="string">"body_style"</span>].cat.codes</span><br><span class="line">obj_df.head()</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvfh4tpzuj213p0au3zi.jpg" alt=""></p>
+<h4 id="one-hot-encoding"><a href="#one-hot-encoding" class="headerlink" title="one hot encoding"></a>one hot encoding</h4><ul>
+<li>label encoding 因为将wagon转化为4，而convertible变成了0，这里面是不是会有大大小的比较，可能会造成误解，然后利用one hot encoding这种方式<br>是将特征转化为0或者1，这样会增加数据的列的数量，同时也减少了label encoding造成的衡量数据大小的误解。</li>
+<li>pandas中提供了get_dummies 方法可以将需要转化的列的值转化为0,1,两种编码</li>
 </ul>
-<h4 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h4><ul>
-<li>常用的决策树有ID3， C4.5 ,CART三种. 三种算法模型构架相似，只是采用了不同的指标</li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新生成DataFrame包含了新生成的三列数据,</span></span><br><span class="line"><span class="comment"># drive_wheels_4wd </span></span><br><span class="line"><span class="comment"># drive_wheels_fwd</span></span><br><span class="line"><span class="comment"># drive_wheels_rwd</span></span><br><span class="line">pd.get_dummies(obj_df,columns=[<span class="string">"drive_wheels"</span>]).head()</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvf9zuskxj20z90axq3j.jpg" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 该方法之所以强大，是因为可以同时处理多个category的列，同时选择prefix前缀分别对应好</span></span><br><span class="line"><span class="comment"># 产生的新的DataFrame所有数据都包含</span></span><br><span class="line">pd.get_dummies(obj_df, columns=[<span class="string">"body_style"</span>, <span class="string">"drive_wheels"</span>], prefix=[<span class="string">"body"</span>, <span class="string">"drive"</span>]).head()</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvfbg1lg1j210n0aymxn.jpg" alt=""></p>
+<h4 id="自定义0-1-encoding"><a href="#自定义0-1-encoding" class="headerlink" title="自定义0,1 encoding"></a>自定义0,1 encoding</h4><ul>
+<li>有的时候回根据业务需要，可能会结合label encoding以及not hot 两种方式进行二值化。</li>
 </ul>
-<h4 id="首先看ID3算法"><a href="#首先看ID3算法" class="headerlink" title="首先看ID3算法"></a>首先看ID3算法</h4><ul>
-<li>基于奥卡姆剃刀原理，即用尽量较少的东西做更多的事。ID3算法即iterative Dichotomiser3，迭代二叉树三代，越是小型的决策树优于较大的决策树。</li>
-<li>核心思想是以信息增益来度量属性的选择，选择分裂后信息增益最大的属性进行分类。</li>
-<li>信息增益是属性选择中一个重要指标，它定义为一个属性能够为分类系统带来的多少信息，带来的信息越多，该属性就越重要，而信息量，就是熵。</li>
-<li>熵的定义是信息量的期望值，熵越大，一个变量的不确定性越大，它带来的信息量就越大，计算信息熵的公式为：<img src="https://github.com/KeKe-Li/tutorial/raw/master/assets/images/176.jpg" alt="">，其中，p为出现c分类时的概率。</li>
-<li>如何计算一个属性的信息增益？</li>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obj_df[<span class="string">"engine_type"</span>].value_counts()</span><br></pre></td></tr></table></figure>
+<pre><code>ohc      148
+ohcf      15
+ohcv      13
+dohc      12
+l         12
+rotor      4
+dohcv      1
+Name: engine_type, dtype: int64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 有的时候为了区分出 engine_type是否是och技术的，可以使用二值化，将该列进行处理</span></span><br><span class="line"><span class="comment"># 这也突出了领域知识是如何以最有效的方式解决问题</span></span><br><span class="line">obj_df[<span class="string">"engine_type_code"</span>] = np.where(obj_df[<span class="string">"engine_type"</span>].str.contains(<span class="string">"ohc"</span>),<span class="number">1</span>,<span class="number">0</span>)</span><br><span class="line">obj_df[[<span class="string">"make"</span>,<span class="string">"engine_type"</span>,<span class="string">"engine_type_code"</span>]].head()</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvfe3f1ybj20ky07w74l.jpg" alt=""></p>
+<h3 id="scikit-learn中的数据转化"><a href="#scikit-learn中的数据转化" class="headerlink" title="scikit-learn中的数据转化"></a>scikit-learn中的数据转化</h3><ul>
+<li>sklearn.processing模块提供了很多方便的数据转化以及缺失值处理方式。可以直接从该模块导入</li>
+<li>Imputer</li>
+<li>LabelEncoder，</li>
+<li>LabelBinarizer，0,1归一化(最大最小标准化)，</li>
+<li>Normalizer正则化（L1，L2）一般用的不多，</li>
+<li>StandardScale 标准化</li>
+<li>max_mixScale（最大最小标准化max_mix），</li>
+<li>非线性转换包括，生成多项式特征(PolynomialFeatures),将每个特征缩放在同样的范围或分布情况下</li>
+<li><a href="http://scikit-learn.org/stable/modules/preprocessing.html#preprocessing" target="_blank" rel="noopener">sklearn processing 模块官网文档链接</a></li>
+<li><a href="http://contrib.scikit-learn.org/categorical-encoding/" target="_blank" rel="noopener">category_encoders包官方文档</a></li>
 </ul>
-
+<h4 id="至此，数据预处理以及category转化大致讲完了。"><a href="#至此，数据预处理以及category转化大致讲完了。" class="headerlink" title="至此，数据预处理以及category转化大致讲完了。"></a>至此，数据预处理以及category转化大致讲完了。</h4>
       
     </div>
     
@@ -480,9 +564,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/boosting/" rel="tag"># boosting</a>
+            <a href="/tags/data-processing/" rel="tag"># data processing</a>
           
-            <a href="/tags/集成算法/" rel="tag"># 集成算法</a>
+            <a href="/tags/pandas/" rel="tag"># pandas</a>
           
         </div>
       
@@ -495,15 +579,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/08/02/数据类型转化/" rel="next" title="数据类型转化">
+                <i class="fa fa-chevron-left"></i> 数据类型转化
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/11/general-regression-models/" rel="prev" title=" general regression models ">
-                 general regression models  <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -635,7 +719,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bagging和Boosting的概念与区别"><span class="nav-number">1.</span> <span class="nav-text">Bagging和Boosting的概念与区别</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#随机森林属于集成学习-ensemble-learning-中的bagging算法，在集成算法中主要分为bagging算法与boosting算法"><span class="nav-number">1.1.</span> <span class="nav-text">随机森林属于集成学习(ensemble learning)中的bagging算法，在集成算法中主要分为bagging算法与boosting算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Bagging算法-套袋法，bootstrap-aggregating"><span class="nav-number">1.1.1.</span> <span class="nav-text">Bagging算法(套袋法，bootstrap aggregating)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Boosting（提升法）"><span class="nav-number">1.1.2.</span> <span class="nav-text">Boosting（提升法）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Bagging和Boosting-的主要区别"><span class="nav-number">1.1.3.</span> <span class="nav-text">Bagging和Boosting 的主要区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#将决策树与以上框架组合成新的算法"><span class="nav-number">1.1.4.</span> <span class="nav-text">将决策树与以上框架组合成新的算法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#决策树"><span class="nav-number">1.1.5.</span> <span class="nav-text">决策树</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#首先看ID3算法"><span class="nav-number">1.1.6.</span> <span class="nav-text">首先看ID3算法</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#category-type-data-in-pandas"><span class="nav-number">1.</span> <span class="nav-text">category type data in pandas</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在处理完缺失值之后，有以下几种方式进行category数据转化encoding"><span class="nav-number">2.</span> <span class="nav-text">在处理完缺失值之后，有以下几种方式进行category数据转化encoding</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#label-encoding-是将一组无规则的，没有大小比较的数据转化为数字"><span class="nav-number">2.1.</span> <span class="nav-text">label encoding 是将一组无规则的，没有大小比较的数据转化为数字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#这种方式就像是密码编码一样，这，个比喻很有意思，就像之前看电影，记得一句台词，他们俩亲密的像做贼一样"><span class="nav-number">2.2.</span> <span class="nav-text">这种方式就像是密码编码一样，这，个比喻很有意思，就像之前看电影，记得一句台词，他们俩亲密的像做贼一样</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#one-hot-encoding"><span class="nav-number">2.3.</span> <span class="nav-text">one hot encoding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义0-1-encoding"><span class="nav-number">2.4.</span> <span class="nav-text">自定义0,1 encoding</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scikit-learn中的数据转化"><span class="nav-number">3.</span> <span class="nav-text">scikit-learn中的数据转化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#至此，数据预处理以及category转化大致讲完了。"><span class="nav-number">3.1.</span> <span class="nav-text">至此，数据预处理以及category转化大致讲完了。</span></a></li></ol></li></ol></div>
             
 
           </div>

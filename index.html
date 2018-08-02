@@ -306,6 +306,289 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/02/data-processing-pandas/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Friedman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Friedman's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/02/data-processing-pandas/" itemprop="url">pandas data processing</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-02T16:00:37+08:00">
+                2018-08-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/pandas/" itemprop="url" rel="index">
+                    <span itemprop="name">pandas</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,362 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长&asymp;</span>
+                
+                <span title="阅读时长">
+                  6 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="category-type-data-in-pandas"><a href="#category-type-data-in-pandas" class="headerlink" title="category type data in pandas"></a>category type data in pandas</h3><ul>
+<li>实际应用pandas过程中，经常会用到category数据类型，通常以text的形式显示，包括颜色（红，绿，蓝），尺寸的大小（大，中，小），还有地理信息等（国家，省份），这些数据的处理经常会有各种各样的问题，pandas以及scikit-learn两个包可以将category数据转化为合适的数值型格式，这篇主要介绍通过这两个包处理category类型的数据转化为数值类型，也就是encoding的过程。</li>
+<li>数据来源<a href="http://mlr.cs.umass.edu/ml/index.html" target="_blank" rel="noopener">UCI Machine Learning Repository</a>，这个数据集中包含了很多的category类型的数据，可以从链接汇总查看数据的代表的含义。</li>
+<li>下面开始导入需要用到的包</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 规定一下数据列的各个名称，</span></span><br><span class="line">headers = [<span class="string">"symboling"</span>, <span class="string">"normalized_losses"</span>, <span class="string">"make"</span>, <span class="string">"fuel_type"</span>, <span class="string">"aspiration"</span>,</span><br><span class="line">           <span class="string">"num_doors"</span>, <span class="string">"body_style"</span>, <span class="string">"drive_wheels"</span>, <span class="string">"engine_location"</span>,</span><br><span class="line">           <span class="string">"wheel_base"</span>, <span class="string">"length"</span>, <span class="string">"width"</span>, <span class="string">"height"</span>, <span class="string">"curb_weight"</span>,</span><br><span class="line">           <span class="string">"engine_type"</span>, <span class="string">"num_cylinders"</span>, <span class="string">"engine_size"</span>, <span class="string">"fuel_system"</span>,</span><br><span class="line">           <span class="string">"bore"</span>, <span class="string">"stroke"</span>, <span class="string">"compression_ratio"</span>, <span class="string">"horsepower"</span>, <span class="string">"peak_rpm"</span>,</span><br><span class="line">           <span class="string">"city_mpg"</span>, <span class="string">"highway_mpg"</span>, <span class="string">"price"</span>]</span><br><span class="line"><span class="comment"># 从pandas导入csv文件，将?标记为NaN缺失值</span></span><br><span class="line">df=pd.read_csv(<span class="string">"http://mlr.cs.umass.edu/ml/machine-learning-databases/autos/imports-85.data"</span>,header=<span class="keyword">None</span>,names=headers,na_values=<span class="string">"?"</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvf3plqefj215n0ci75u.jpg" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df.dtypes</span><br></pre></td></tr></table></figure>
+<pre><code>symboling              int64
+normalized_losses    float64
+make                  object
+fuel_type             object
+aspiration            object
+num_doors             object
+body_style            object
+drive_wheels          object
+engine_location       object
+wheel_base           float64
+length               float64
+width                float64
+height               float64
+curb_weight            int64
+engine_type           object
+num_cylinders         object
+engine_size            int64
+fuel_system           object
+bore                 float64
+stroke               float64
+compression_ratio    float64
+horsepower           float64
+peak_rpm             float64
+city_mpg               int64
+highway_mpg            int64
+price                float64
+dtype: object
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果只关注category 类型的数据，其实根本没有必要拿到这些全部数据，只需要将object类型的数据取出，然后进行后续分析即可</span></span><br><span class="line">obj_df = df.select_dtypes(include=[<span class="string">'object'</span>]).copy()</span><br><span class="line">obj_df.head()</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvf4zyk7fj215q0aomyh.jpg" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  在进行下一步处理的之前，需要将数据进行缺失值的处理，对列进行处理axis=1</span></span><br><span class="line">obj_df[obj_df.isnull().any(axis=<span class="number">1</span>)]</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvf5ra63gj215k04emxn.jpg" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 处理缺失值的方式有很多种，根据项目的不同或者填补缺失值或者去掉该样本。本文中的数据缺失用该列的众数来补充。</span></span><br><span class="line">obj_df.num_doors.value_counts()</span><br></pre></td></tr></table></figure>
+<pre><code>four    114
+two      89
+Name: num_doors, dtype: int64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obj_df=obj_df.fillna(&#123;<span class="string">"num_doors"</span>:<span class="string">"four"</span>&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="在处理完缺失值之后，有以下几种方式进行category数据转化encoding"><a href="#在处理完缺失值之后，有以下几种方式进行category数据转化encoding" class="headerlink" title="在处理完缺失值之后，有以下几种方式进行category数据转化encoding"></a>在处理完缺失值之后，有以下几种方式进行category数据转化encoding</h3><ul>
+<li>Find and Replace</li>
+<li>label encoding</li>
+<li>One Hot encoding </li>
+<li>Custom Binary encoding</li>
+<li>sklearn</li>
+<li>advanced Approaches</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#  pandas里面的replace文档非常丰富，笔者在使用该功能时候，深感其参数众多，深感提供的功能也非常的强大</span></span><br><span class="line"><span class="comment"># 本文中使用replace的功能，创建map的字典，针对需要数据清理的列进行清理更加方便，例如：</span></span><br><span class="line">cleanup_nums= &#123;</span><br><span class="line">    <span class="string">"num_doors"</span>:&#123;<span class="string">"four"</span>:<span class="number">4</span>,<span class="string">"two"</span>:<span class="number">2</span>&#125;,</span><br><span class="line">    <span class="string">"num_cylinders"</span>:&#123;</span><br><span class="line">        <span class="string">"four"</span>:<span class="number">4</span>,<span class="string">"six"</span>:<span class="number">6</span>,<span class="string">"five"</span>:<span class="number">5</span>,<span class="string">"eight"</span>:<span class="number">8</span>,<span class="string">"two"</span>:<span class="number">2</span>,<span class="string">"twelve"</span>:<span class="number">12</span>,<span class="string">"three"</span>:<span class="number">3</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj_df.replace(cleanup_nums,inplace=<span class="keyword">True</span>)</span><br><span class="line">obj_df.head()</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvf702rzrj215k0anabc.jpg" alt=""></p>
+<h4 id="label-encoding-是将一组无规则的，没有大小比较的数据转化为数字"><a href="#label-encoding-是将一组无规则的，没有大小比较的数据转化为数字" class="headerlink" title="label encoding 是将一组无规则的，没有大小比较的数据转化为数字"></a>label encoding 是将一组无规则的，没有大小比较的数据转化为数字</h4><ul>
+<li>比如body_style 字段中含有多个数据值，可以使用该方法将其转化</li>
+<li>convertible &gt; 0</li>
+<li>hardtop  &gt; 1</li>
+<li>hatchback  &gt; 2</li>
+<li>sedan &gt; 3</li>
+<li>wagon &gt; 4</li>
+</ul>
+<h4 id="这种方式就像是密码编码一样，这，个比喻很有意思，就像之前看电影，记得一句台词，他们俩亲密的像做贼一样"><a href="#这种方式就像是密码编码一样，这，个比喻很有意思，就像之前看电影，记得一句台词，他们俩亲密的像做贼一样" class="headerlink" title="这种方式就像是密码编码一样，这，个比喻很有意思，就像之前看电影，记得一句台词，他们俩亲密的像做贼一样"></a>这种方式就像是密码编码一样，这，个比喻很有意思，就像之前看电影，记得一句台词，他们俩亲密的像做贼一样</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 通过pandas里面的 category数据类型，可以很方便的或者该编码</span></span><br><span class="line">obj_df[<span class="string">"body_style"</span>]=obj_df[<span class="string">"body_style"</span>].astype(<span class="string">"category"</span>)</span><br><span class="line">obj_df.dtypes</span><br></pre></td></tr></table></figure>
+<pre><code>make                 object
+fuel_type            object
+aspiration           object
+num_doors             int64
+body_style         category
+drive_wheels         object
+engine_location      object
+engine_type          object
+num_cylinders         int64
+fuel_system          object
+dtype: object
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 我们可以通过赋值新的列，保存其对应的code</span></span><br><span class="line"><span class="comment"># 通过这种方法可以舒服的数据，便于以后的数据分析以及整理</span></span><br><span class="line">obj_df[<span class="string">"body_style_code"</span>] = obj_df[<span class="string">"body_style"</span>].cat.codes</span><br><span class="line">obj_df.head()</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvfh4tpzuj213p0au3zi.jpg" alt=""></p>
+<h4 id="one-hot-encoding"><a href="#one-hot-encoding" class="headerlink" title="one hot encoding"></a>one hot encoding</h4><ul>
+<li>label encoding 因为将wagon转化为4，而convertible变成了0，这里面是不是会有大大小的比较，可能会造成误解，然后利用one hot encoding这种方式<br>是将特征转化为0或者1，这样会增加数据的列的数量，同时也减少了label encoding造成的衡量数据大小的误解。</li>
+<li>pandas中提供了get_dummies 方法可以将需要转化的列的值转化为0,1,两种编码</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新生成DataFrame包含了新生成的三列数据,</span></span><br><span class="line"><span class="comment"># drive_wheels_4wd </span></span><br><span class="line"><span class="comment"># drive_wheels_fwd</span></span><br><span class="line"><span class="comment"># drive_wheels_rwd</span></span><br><span class="line">pd.get_dummies(obj_df,columns=[<span class="string">"drive_wheels"</span>]).head()</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvf9zuskxj20z90axq3j.jpg" alt=""></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 该方法之所以强大，是因为可以同时处理多个category的列，同时选择prefix前缀分别对应好</span></span><br><span class="line"><span class="comment"># 产生的新的DataFrame所有数据都包含</span></span><br><span class="line">pd.get_dummies(obj_df, columns=[<span class="string">"body_style"</span>, <span class="string">"drive_wheels"</span>], prefix=[<span class="string">"body"</span>, <span class="string">"drive"</span>]).head()</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvfbg1lg1j210n0aymxn.jpg" alt=""></p>
+<h4 id="自定义0-1-encoding"><a href="#自定义0-1-encoding" class="headerlink" title="自定义0,1 encoding"></a>自定义0,1 encoding</h4><ul>
+<li>有的时候回根据业务需要，可能会结合label encoding以及not hot 两种方式进行二值化。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">obj_df[<span class="string">"engine_type"</span>].value_counts()</span><br></pre></td></tr></table></figure>
+<pre><code>ohc      148
+ohcf      15
+ohcv      13
+dohc      12
+l         12
+rotor      4
+dohcv      1
+Name: engine_type, dtype: int64
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 有的时候为了区分出 engine_type是否是och技术的，可以使用二值化，将该列进行处理</span></span><br><span class="line"><span class="comment"># 这也突出了领域知识是如何以最有效的方式解决问题</span></span><br><span class="line">obj_df[<span class="string">"engine_type_code"</span>] = np.where(obj_df[<span class="string">"engine_type"</span>].str.contains(<span class="string">"ohc"</span>),<span class="number">1</span>,<span class="number">0</span>)</span><br><span class="line">obj_df[[<span class="string">"make"</span>,<span class="string">"engine_type"</span>,<span class="string">"engine_type_code"</span>]].head()</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvfe3f1ybj20ky07w74l.jpg" alt=""></p>
+<h3 id="scikit-learn中的数据转化"><a href="#scikit-learn中的数据转化" class="headerlink" title="scikit-learn中的数据转化"></a>scikit-learn中的数据转化</h3><ul>
+<li>sklearn.processing模块提供了很多方便的数据转化以及缺失值处理方式。可以直接从该模块导入</li>
+<li>Imputer</li>
+<li>LabelEncoder，</li>
+<li>LabelBinarizer，0,1归一化(最大最小标准化)，</li>
+<li>Normalizer正则化（L1，L2）一般用的不多，</li>
+<li>StandardScale 标准化</li>
+<li>max_mixScale（最大最小标准化max_mix），</li>
+<li>非线性转换包括，生成多项式特征(PolynomialFeatures),将每个特征缩放在同样的范围或分布情况下</li>
+<li><a href="http://scikit-learn.org/stable/modules/preprocessing.html#preprocessing" target="_blank" rel="noopener">sklearn processing 模块官网文档链接</a></li>
+<li><a href="http://contrib.scikit-learn.org/categorical-encoding/" target="_blank" rel="noopener">category_encoders包官方文档</a></li>
+</ul>
+<h4 id="至此，数据预处理以及category转化大致讲完了。"><a href="#至此，数据预处理以及category转化大致讲完了。" class="headerlink" title="至此，数据预处理以及category转化大致讲完了。"></a>至此，数据预处理以及category转化大致讲完了。</h4>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/02/数据类型转化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1069,7 +1352,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1080,7 +1363,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
