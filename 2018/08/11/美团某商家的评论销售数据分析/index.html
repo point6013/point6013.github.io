@@ -101,7 +101,7 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1fu66vpau0lj20m80b43yp.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1fu66ujghx0j211i084wfj.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1fu66mxp9crj20p00b4gmb.jpg">
-<meta property="og:updated_time" content="2018-08-11T17:49:26.164Z">
+<meta property="og:updated_time" content="2018-08-11T17:50:37.261Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="美团某商家的评论销售数据分析">
 <meta name="twitter:description" content="基于pandas python的美团某商家的评论销售数据分析 爬虫获得美团某家烧烤店的订单（代码省略） 数据清洗 数据初步的统计 可视化 数据中的评论数据用于自然语言处理（待续）  导入相关库12345from pyecharts import Bar,Pieimport pandas as pdimport numpy as npimport  matplotlib.pyplot as  plt">
@@ -416,7 +416,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2,739 字
+                  2,763 字
                 </span>
               
 
@@ -810,6 +810,9 @@ dtype: int64
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">df_level=df[<span class="string">'userLevel'</span>].value_counts().reindex(range(<span class="number">7</span>))</span><br><span class="line"><span class="keyword">from</span> pyecharts <span class="keyword">import</span> Pie</span><br><span class="line">pie=Pie(<span class="string">"用户等级分布"</span>,title_pos=<span class="string">"center"</span>,width=<span class="number">900</span>)</span><br><span class="line">pie.add(<span class="string">"levels distribution"</span>,[<span class="string">"level "</span>+str(i) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">7</span>)],df_level.values,is_random=<span class="keyword">True</span>,radidus=[<span class="number">30</span>,<span class="number">45</span>],legend_pos=<span class="string">'left'</span>,rosetype=<span class="string">'area'</span>,legend_orient=<span class="string">'vertical'</span>,is_label_show=<span class="keyword">True</span>,label_text_size=<span class="number">20</span>)</span><br><span class="line">pie</span><br></pre></td></tr></table></figure>
 <p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1fu66mxp9crj20p00b4gmb.jpg" alt=""></p>
+<ul>
+<li>至此基本数据分析完成，后续会开始于其评论数据的挖掘</li>
+</ul>
 
       
     </div>
