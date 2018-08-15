@@ -91,7 +91,7 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1fu9c1rlvn1j20mo05c74b.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1fu9c4y3h26j20u5057wem.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1fu9l64amzrj208807vq2x.jpg">
-<meta property="og:updated_time" content="2018-08-14T15:52:44.322Z">
+<meta property="og:updated_time" content="2018-08-15T01:50:37.515Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="meituan_comment_nlp">
 <meta name="twitter:description" content="美团店铺评价语言处理以及分类（NLP） 上两篇博客中介绍了美团店铺的订单信息以及数据分析以及可视化 其中还有一部分评论文本信息并没有提及到，自然也就有了这篇 主要用到的包有jieba，sklearn，pandas 本篇博文主要先用的是词袋模型(bag of words),将文本以数值特征向量的形式来表示(每个文档构建一个特征向量，有很多的0，类似于前文说的category类的one-hot形式，得">
@@ -503,7 +503,7 @@ Name: cut_comment, dtype: object
 <pre><code>(2353, 1965)
 </code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pd.DataFrame(vect.fit_transform(X_train[<span class="string">"cut_comment"</span>]).toarray(),columns=vect.get_feature_names()).iloc[:,<span class="number">0</span>:<span class="number">25</span>].head()</span><br><span class="line"><span class="comment"># print(vect.get_feature_names())</span></span><br><span class="line"><span class="comment">#  数据维数1956，不算很大（未使用停用词）</span></span><br><span class="line"><span class="comment"># 将其转化为DataFrame</span></span><br></pre></td></tr></table></figure>
 <ul>
-<li>发现其中有很多的数字以及无效特征，随后传入实例化参数的同时，加入正则匹配取出这些无意义特征，同时取出停用词<br><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1fu9c1rlvn1j20mo05c74b.jpg" alt=""></li>
+<li>发现其中有很多的数字以及无效特征，随后传入实例化参数的同时，加入正则匹配取出这些无意义特征，同时去除停用词<br><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1fu9c1rlvn1j20mo05c74b.jpg" alt=""></li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vect = CountVectorizer(token_pattern=<span class="string">u'(?u)\\b[^\\d\\W]\\w+\\b'</span>,stop_words=frozenset(stopwords)) <span class="comment"># 去除停用词，匹配以数字开头的非单词字符</span></span><br><span class="line">pd.DataFrame(vect.fit_transform(X_train[<span class="string">'cut_comment'</span>]).toarray(), columns=vect.get_feature_names()).head()</span><br><span class="line"><span class="comment"># 1691 columns,去掉以数字为特征值的列，减少了近三百列，由1965减小到1691 </span></span><br><span class="line"><span class="comment"># max_df = 0.8 # 在超过这一比例的文档中出现的关键词（过于平凡），去除掉（可以自行设定）</span></span><br><span class="line"><span class="comment"># min_df = 3 # 在低于这一数量的文档中出现的关键词（过于独特），去除掉。（可以自行设定）</span></span><br></pre></td></tr></table></figure>
 <ul>
