@@ -391,7 +391,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2,850 字
+                  2,899 字
                 </span>
               
 
@@ -441,7 +441,14 @@
 <li>读取文件</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df=pd.read_excel(<span class="string">"all_data_meituan.xlsx"</span>)[[<span class="string">"comment"</span>,<span class="string">"star"</span>]]</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure>
-<h4 id="上一博客中数据预处理，忘记的可以打开此链接复习"><a href="#上一博客中数据预处理，忘记的可以打开此链接复习" class="headerlink" title="上一博客中数据预处理，忘记的可以打开此链接复习"></a><a href="https://point6013.github.io/2018/08/14/meituan-comment-nlp/" target="_blank" rel="noopener">上一博客中数据预处理，忘记的可以打开此链接复习</a></h4><h3 id="朴素贝叶斯"><a href="#朴素贝叶斯" class="headerlink" title="朴素贝叶斯"></a>朴素贝叶斯</h3><h4 id="模型构建"><a href="#模型构建" class="headerlink" title="模型构建"></a>模型构建</h4><ul>
+<h4 id="上一博客中数据预处理，忘记的可以打开此链接复习"><a href="#上一博客中数据预处理，忘记的可以打开此链接复习" class="headerlink" title="上一博客中数据预处理，忘记的可以打开此链接复习"></a><a href="https://point6013.github.io/2018/08/14/meituan-comment-nlp/" target="_blank" rel="noopener">上一博客中数据预处理，忘记的可以打开此链接复习</a></h4><ul>
+<li>直接上处理好的特征，如下</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1fu9c4y3h26j20u5057wem.jpg" alt=""></p>
+<ul>
+<li>朴素贝叶斯作为文本界的快速分类，这次将他作为对比的初始模型，将朴素贝叶斯与逻辑回归进行比较</li>
+</ul>
+<h4 id="模型构建"><a href="#模型构建" class="headerlink" title="模型构建"></a>模型构建</h4><ul>
 <li>从sklearn 朴素贝叶斯中导入多维贝叶斯</li>
 <li>朴素贝叶斯通常用来处理文本分类垃圾短信，速度飞快，效果一般都不会差很多</li>
 <li>MultinomialNB类可以选择默认参数，如果模型预测能力不符合要求，可以适当调整</li>
