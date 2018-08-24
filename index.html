@@ -429,8 +429,7 @@
 
       
         
-          
-            <h3 id="数据获取"><a href="#数据获取" class="headerlink" title="数据获取"></a>数据获取</h3><ul>
+          <h3 id="数据获取"><a href="#数据获取" class="headerlink" title="数据获取"></a>数据获取</h3><ul>
 <li>数据是从搜狐新闻开放的新闻xml数据，经过一系列的处理之后，生成的一个excel文件</li>
 <li>该xml文件的处理有单独的处理过程，就是用pandas处理，该过程在此省略</li>
 </ul>
@@ -446,398 +445,13 @@
 <ul>
 <li>查看新闻类型的分布，共9类</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df_data[<span class="string">'category'</span>].value_counts()</span><br><span class="line"><span class="comment"># 可以看到这里面存在类别不平衡，最大的差距有7倍。</span></span><br></pre></td></tr></table></figure>
-<pre><code>health      30929
-news        27613
-auto        22841
-stock       18152
-it          13875
-yule        13785
-women        4667
-book         4411
-business     1769
-Name: category, dtype: int64
-</code></pre><ul>
-<li>使用sklearn中的处理模块的labelEncoder方法对类标进行处理</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.preprocessing <span class="keyword">import</span> LabelEncoder</span><br><span class="line">class_le=LabelEncoder()</span><br><span class="line">class_le.fit(np.unique(df[<span class="string">'category'</span>].values)</span><br><span class="line">print(list(class_le.classes_))</span><br><span class="line">y=class_le.transform(df[<span class="string">'category'</span>].values)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看前20个新闻样本的类别</span></span><br><span class="line">y[:<span class="number">20</span>]</span><br></pre></td></tr></table></figure>
-<pre><code>[&apos;auto&apos;, &apos;book&apos;, &apos;business&apos;, &apos;health&apos;, &apos;it&apos;, &apos;news&apos;, &apos;stock&apos;, &apos;women&apos;, &apos;yule&apos;]
-array([7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7], dtype=int64)
-</code></pre><ul>
-<li>导入jieba，进行分词</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jieba</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">chinese_word_cut</span><span class="params">(mytext)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">" "</span>.join(jieba.cut(mytext))</span><br><span class="line">X=pd.DataFrame()</span><br><span class="line">X[<span class="string">'cut_content'</span>]=df[<span class="string">"content"</span>].apply(chinese_word_cut)</span><br><span class="line">X[<span class="string">'cut_content'</span>].head()</span><br></pre></td></tr></table></figure>
-<pre><code>Building prefix dict from the default dictionary ...
-Loading model from cache C:\Users\HUANG_~1\AppData\Local\Temp\jieba.cache
-Loading model cost 0.966 seconds.
-Prefix dict has been built succesfully.
-
-
-
-
-
-1    产品名称 ：  规格 及 价格 ： ３ ０ ｍ ｌ ／ ３ ０ ０ 　 元  羽西 当归...
-2    常见问题  Ｑ ： 为什么 我 提交 不了 试用 申请 　 Ａ ： 试用 申请 必须 同时...
-3    产品名称 ： 肌醇 （ Ｐ ｕ ｒ ｅ 　 Ｓ ｋ ｉ ｎ ） 深层 卸妆 凝胶  规格 ...
-4    欧诗漫 的 试用装 终于 延期 而 至 ， 果然 不负 所望 ， 包装 很 精美 。 从 快...
-5    试用 申请 步骤  １ 注册 并 完善 个人资料 　 登入 搜狐 试用 频道 ， 填写 并...
-Name: cut_content, dtype: object
-</code></pre><ul>
-<li>使用词袋模型进行文本处理，去除停用词，去除数字特征，使用朴素贝叶斯进行分类</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.model_selection <span class="keyword">import</span>  train_test_split</span><br><span class="line">X_train,X_test,y_train,y_test= train_test_split(X,y,random_state=<span class="number">42</span>,test_size=<span class="number">0.25</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_custom_stopwords</span><span class="params">(stop_words_file)</span>:</span></span><br><span class="line">    <span class="keyword">with</span> open(stop_words_file,encoding=<span class="string">"utf-8"</span>) <span class="keyword">as</span> f:</span><br><span class="line">        custom_stopwords_list=[i.strip() <span class="keyword">for</span> i <span class="keyword">in</span> f.readlines()]</span><br><span class="line">    <span class="keyword">return</span> custom_stopwords_list</span><br><span class="line">stop_words_file = <span class="string">"stopwords.txt"</span></span><br><span class="line">stopwords = get_custom_stopwords(stop_words_file) <span class="comment"># 获取停用词</span></span><br><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span>  CountVectorizer</span><br><span class="line">vect = CountVectorizer(token_pattern=<span class="string">u'(?u)\\b[^\\d\\W]\\w+\\b'</span>,stop_words=frozenset(stopwords))</span><br><span class="line"><span class="keyword">from</span> sklearn.naive_bayes <span class="keyword">import</span> MultinomialNB</span><br><span class="line">nb=MultinomialNB()</span><br><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> make_pipeline</span><br><span class="line">pipe=make_pipeline(vect,nb)</span><br><span class="line">pipe.fit(X_train.cut_content, y_train)</span><br><span class="line">y_pred = pipe.predict(X_test.cut_content)</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span>  metrics</span><br><span class="line">print(metrics.accuracy_score(y_test,y_pred))</span><br><span class="line">metrics.confusion_matrix(y_test,y_pred)</span><br></pre></td></tr></table></figure>
-<pre><code>0.897216216938
-
-
-
-
-
-array([[6266,  163,    2,  249,    5,  345,   66,   74,   53],
-       [   5, 1118,    0,    0,    0,   31,    2,    5,   37],
-       [   8,    4,   15,    0,    0,  104,  329,    5,    3],
-       [   4,    1,    0, 8230,    0,   64,    6,    1,    0],
-       [  59,   29,    0,   10, 3672,   66,   29,   26,   45],
-       [  72,   71,    6,   26,    1, 5683,  756,   60,  193],
-       [  28,    0,   10,    0,    0,  381, 4275,    0,    2],
-       [   9,   90,    0,    5,    1,   74,    5,  890,  132],
-       [   2,   38,    1,    2,    0,   44,    1,   11, 3467]], dtype=int64)
-</code></pre><ul>
-<li><p>可以看到朴素贝叶斯对该测试集的正确率达到了接近90%</p>
-</li>
-<li><p>对训练集进行评估，正确率91%</p>
-</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">y_pred = pipe.predict(X_train.cut_content)</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span>  metrics</span><br><span class="line">print(metrics.accuracy_score(y_train,y_pred))</span><br></pre></td></tr></table></figure>
-<pre><code>0.913158362989
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.linear_model <span class="keyword">import</span> LogisticRegression</span><br></pre></td></tr></table></figure>
-<ul>
-<li>随后我们使用逻辑回归模型进行拟合模型并对测试集进行预测，测试集准确率达到94%</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">lr=LogisticRegression()  </span><br><span class="line"><span class="keyword">from</span> sklearn.pipeline <span class="keyword">import</span> make_pipeline</span><br><span class="line">pipe=make_pipeline(vect,lr)</span><br><span class="line">pipe.fit(X_train.cut_content, y_train)</span><br><span class="line">y_pred = pipe.predict(X_test.cut_content)</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span>  metrics</span><br><span class="line">print(metrics.accuracy_score(y_test,y_pred))</span><br><span class="line">metrics.confusion_matrix(y_test,y_pred)</span><br></pre></td></tr></table></figure>
-<pre><code>0.944644620599
-
-
-array([[7079,    3,    3,    5,   19,   62,   27,   10,   15],
-       [  43, 1131,    1,    0,    3,    3,    4,    6,    7],
-       [  16,    0,   36,    1,    1,  106,  296,    7,    5],
-       [   7,    0,    0, 8298,    0,    1,    0,    0,    0],
-       [  48,    1,    0,    0, 3870,    9,    2,    1,    5],
-       [  60,   12,   22,   14,    9, 6453,  218,   35,   45],
-       [  36,    1,  140,    0,    7,  415, 4090,    3,    4],
-       [  48,   28,    1,    1,   10,   54,    6, 1008,   50],
-       [  44,   12,    0,    1,   10,   38,    4,   29, 3428]], dtype=int64)
-</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.tree <span class="keyword">import</span> DecisionTreeClassifier</span><br><span class="line">tree=DecisionTreeClassifier(criterion=<span class="string">'entropy'</span>,random_state=<span class="number">1</span>)</span><br><span class="line"><span class="keyword">from</span> sklearn.ensemble <span class="keyword">import</span> BaggingClassifier</span><br><span class="line">bag=BaggingClassifier(base_estimator=tree,</span><br><span class="line">                     n_estimators=<span class="number">10</span>,</span><br><span class="line">                     max_samples=<span class="number">1.0</span>,</span><br><span class="line">                     max_features=<span class="number">1.0</span>,</span><br><span class="line">                     bootstrap=<span class="keyword">True</span>,</span><br><span class="line">                     bootstrap_features=<span class="keyword">False</span>,</span><br><span class="line">                     n_jobs=<span class="number">4</span>,random_state=<span class="number">1</span>)</span><br><span class="line">pipe=make_pipeline(vect,bag)</span><br><span class="line">pipe.fit(X_train.cut_content, y_train)</span><br><span class="line">y_pred = pipe.predict(X_test.cut_content)</span><br><span class="line">metrics.accuracy_score(y_test,y_pred)</span><br></pre></td></tr></table></figure>
-<ul>
-<li>使用bagging的方法将决策树进行ensemble，得到的准确率比逻辑回归低了1%<br>  0.9294045426642111</li>
-<li>通过对混淆矩阵进行分析，我们返现对第三类，也就是business类的误分类较多，后续需要改进的模型<ul>
-<li>可以使用td-idf进行文本特征处理</li>
-<li>word2vector与深度学习的方式进行结合，测试文本分类效果</li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/18/Pinard/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Friedman">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Friedman's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/18/Pinard/" itemprop="url">未命名</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-18T12:57:21+08:00">
-                2018-08-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,852 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长&asymp;</span>
-                
-                <span title="阅读时长">
-                  7 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Page    1</p>
-<ol>
-<li>2018年8月17日    <a href="https://www.cnblogs.com/pinard/p/9492980.html" target="_blank" rel="noopener">强化学习（四）用蒙特卡罗法（MC）求解</a> </li>
-<li>2018年8月12日        <a href="https://www.cnblogs.com/pinard/p/9463815.html" target="_blank" rel="noopener">强化学习（三）用动态规划（DP）求解</a></li>
-<li>2018年8月5日        <a href="https://www.cnblogs.com/pinard/p/9426283.html" target="_blank" rel="noopener">强化学习（二）马尔科夫决策过程(MDP)</a></li>
-<li>2018年7月29日        <a href="https://www.cnblogs.com/pinard/p/9385570.html" target="_blank" rel="noopener">强化学习（一）模型基础</a></li>
-<li>2018年7月15日        <a href="https://www.cnblogs.com/pinard/p/9314198.html" target="_blank" rel="noopener">异常点检测算法小结</a></li>
-<li>2018年7月1日        <a href="https://www.cnblogs.com/pinard/p/9251296.html" target="_blank" rel="noopener">tensorflow机器学习模型的跨平台上线</a></li>
-<li>2018年6月24日        <a href="https://www.cnblogs.com/pinard/p/9220199.html" target="_blank" rel="noopener">用PMML实现机器学习模型的跨平台上线</a></li>
-<li>2018年6月10日        <a href="https://www.cnblogs.com/pinard/p/9163481.html" target="_blank" rel="noopener">用tensorflow学习贝叶斯个性化排序(BPR)</a></li>
-<li>2018年6月3日        <a href="https://www.cnblogs.com/pinard/p/9128682.html" target="_blank" rel="noopener">贝叶斯个性化排序(BPR)算法小结</a></li>
-<li>2018年5月26日        <a href="https://www.cnblogs.com/pinard/p/9093890.html" target="_blank" rel="noopener">特征工程之特征预处理</a></li>
-</ol>
-<hr>
-<p>Page    2</p>
-<ol>
-<li>2018年5月19日        <a href="https://www.cnblogs.com/pinard/p/9061549.html" target="_blank" rel="noopener">特征工程之特征表达</a></li>
-<li>2018年5月13日        <a href="https://www.cnblogs.com/pinard/p/9032759.html" target="_blank" rel="noopener">特征工程之特征选择</a></li>
-<li>2017年8月3日        <a href="https://www.cnblogs.com/pinard/p/7278324.html" target="_blank" rel="noopener">用gensim学习word2vec</a></li>
-<li>2017年7月28日        <a href="https://www.cnblogs.com/pinard/p/7249903.html" target="_blank" rel="noopener">word2vec原理(三) 基于Negative Sampling的模型</a></li>
-<li>2017年7月27日        <a href="https://www.cnblogs.com/pinard/p/7243513.html" target="_blank" rel="noopener">word2vec原理(二) 基于Hierarchical Softmax的模型</a></li>
-<li>2017年7月13日        <a href="https://www.cnblogs.com/pinard/p/7160330.html" target="_blank" rel="noopener">word2vec原理(一) CBOW与Skip-Gram模型基础</a></li>
-<li>2017年6月23日        <a href="https://www.cnblogs.com/pinard/p/7068574.html" target="_blank" rel="noopener">条件随机场CRF(三) 模型学习与维特比算法解码</a></li>
-<li>2017年6月22日        <a href="https://www.cnblogs.com/pinard/p/7055072.html" target="_blank" rel="noopener">条件随机场CRF(二) 前向后向算法评估标记序列概率</a></li>
-<li>2017年6月19日        <a href="https://www.cnblogs.com/pinard/p/7048333.html" target="_blank" rel="noopener">条件随机场CRF(一)从随机场到线性链条件随机场</a></li>
-<li>2017年6月13日        <a href="https://www.cnblogs.com/pinard/p/7001397.html" target="_blank" rel="noopener">用hmmlearn学习隐马尔科夫模型HMM</a></li>
-</ol>
-<hr>
-<p>Page    3</p>
-<ol>
-<li>2017年6月12日        <a href="https://www.cnblogs.com/pinard/p/6991852.html" target="_blank" rel="noopener">隐马尔科夫模型HMM（四）维特比算法解码隐藏状态序列</a></li>
-<li>2017年6月10日        <a href="https://www.cnblogs.com/pinard/p/6972299.html" target="_blank" rel="noopener">隐马尔科夫模型HMM（三）鲍姆-韦尔奇算法求解HMM参数</a></li>
-<li>2017年6月8日        <a href="https://www.cnblogs.com/pinard/p/6955871.html" target="_blank" rel="noopener">隐马尔科夫模型HMM（二）前向后向算法评估观察序列概率</a></li>
-<li>2017年6月6日        <a href="https://www.cnblogs.com/pinard/p/6945257.html" target="_blank" rel="noopener">隐马尔科夫模型HMM（一）HMM模型</a></li>
-<li>2017年5月27日        <a href="https://www.cnblogs.com/pinard/p/6912636.html" target="_blank" rel="noopener">EM算法原理总结</a></li>
-<li>2017年5月26日        <a href="https://www.cnblogs.com/pinard/p/6908150.html" target="_blank" rel="noopener">用scikit-learn学习LDA主题模型</a></li>
-<li>2017年5月22日        <a href="https://www.cnblogs.com/pinard/p/6873703.html" target="_blank" rel="noopener">文本主题模型之LDA(三) LDA求解之变分推断EM算法</a></li>
-<li>2017年5月18日        <a href="https://www.cnblogs.com/pinard/p/6867828.html" target="_blank" rel="noopener">文本主题模型之LDA(二) LDA求解之Gibbs采样算法</a></li>
-<li>2017年5月17日        <a href="https://www.cnblogs.com/pinard/p/6831308.html" target="_blank" rel="noopener">文本主题模型之LDA(一) LDA基础</a></li>
-<li>2017年5月5日        <a href="https://www.cnblogs.com/pinard/p/6812011.html" target="_blank" rel="noopener">文本主题模型之非负矩阵分解(NMF)</a></li>
-</ol>
-<hr>
-<p>Page    4</p>
-<ol>
-<li>2017年5月4日        <a href="https://www.cnblogs.com/pinard/p/6805861.html" target="_blank" rel="noopener">文本主题模型之潜在语义索引(LSI)</a></li>
-<li>2017年4月24日        <a href="https://www.cnblogs.com/pinard/p/6756534.html" target="_blank" rel="noopener">英文文本挖掘预处理流程总结</a></li>
-<li>2017年4月21日        <a href="https://www.cnblogs.com/pinard/p/6744056.html" target="_blank" rel="noopener">中文文本挖掘预处理流程总结</a></li>
-<li>2017年4月11日        <a href="https://www.cnblogs.com/pinard/p/6693230.html" target="_blank" rel="noopener">文本挖掘预处理之TF-IDF</a></li>
-<li>2017年4月10日        <a href="https://www.cnblogs.com/pinard/p/6688348.html" target="_blank" rel="noopener">文本挖掘预处理之向量化与Hash Trick</a></li>
-<li>2017年4月7日        <a href="https://www.cnblogs.com/pinard/p/6677078.html" target="_blank" rel="noopener">文本挖掘的分词原理</a></li>
-<li>2017年3月30日        <a href="https://www.cnblogs.com/pinard/p/6645766.html" target="_blank" rel="noopener">MCMC(四)Gibbs采样</a></li>
-<li>2017年3月29日        <a href="https://www.cnblogs.com/pinard/p/6638955.html" target="_blank" rel="noopener">MCMC(三)MCMC采样和M-H采样</a></li>
-<li>2017年3月28日        <a href="https://www.cnblogs.com/pinard/p/6632399.html" target="_blank" rel="noopener">MCMC(二)马尔科夫链</a></li>
-<li>2017年3月27日        <a href="https://www.cnblogs.com/pinard/p/6625739.html" target="_blank" rel="noopener">MCMC(一)蒙特卡罗方法</a></li>
-</ol>
-<hr>
-<p>Page    5</p>
-<ol>
-<li>2017年3月11日        <a href="https://www.cnblogs.com/pinard/p/6530523.html" target="_blank" rel="noopener">受限玻尔兹曼机（RBM）原理总结</a></li>
-<li>2017年3月8日        <a href="https://www.cnblogs.com/pinard/p/6519110.html" target="_blank" rel="noopener">LSTM模型与前向反向传播算法</a></li>
-<li>2017年3月6日        <a href="https://www.cnblogs.com/pinard/p/6509630.html" target="_blank" rel="noopener">循环神经网络(RNN)模型与前向反向传播算法</a></li>
-<li>2017年3月3日        <a href="https://www.cnblogs.com/pinard/p/6494810.html" target="_blank" rel="noopener">卷积神经网络(CNN)反向传播算法</a></li>
-<li>2017年3月2日        <a href="https://www.cnblogs.com/pinard/p/6489633.html" target="_blank" rel="noopener">卷积神经网络(CNN)前向传播算法</a></li>
-<li>2017年3月1日        <a href="https://www.cnblogs.com/pinard/p/6483207.html" target="_blank" rel="noopener">卷积神经网络(CNN)模型结构</a></li>
-<li>2017年2月27日        <a href="https://www.cnblogs.com/pinard/p/6472666.html" target="_blank" rel="noopener">深度神经网络（DNN）的正则化</a></li>
-<li>2017年2月24日        <a href="https://www.cnblogs.com/pinard/p/6437495.html" target="_blank" rel="noopener">深度神经网络（DNN）损失函数和激活函数的选择</a></li>
-<li>2017年2月21日        <a href="https://www.cnblogs.com/pinard/p/6422831.html" target="_blank" rel="noopener">深度神经网络（DNN）反向传播算法(BP)</a></li>
-<li>2017年2月20日        <a href="https://www.cnblogs.com/pinard/p/6418668.html" target="_blank" rel="noopener">深度神经网络（DNN）模型与前向传播算法</a></li>
-</ol>
-<hr>
-<p>Page    6</p>
-<ol>
-<li>2017年2月6日        <a href="https://www.cnblogs.com/pinard/p/6370127.html" target="_blank" rel="noopener">分解机(Factorization Machines)推荐算法原理</a></li>
-<li>2017年2月4日        <a href="https://www.cnblogs.com/pinard/p/6364932.html" target="_blank" rel="noopener">用Spark学习矩阵分解推荐算法</a></li>
-<li>2017年2月3日        <a href="https://www.cnblogs.com/pinard/p/6362647.html" target="_blank" rel="noopener">SimRank协同过滤推荐算法</a></li>
-<li>2017年1月26日        <a href="https://www.cnblogs.com/pinard/p/6351319.html" target="_blank" rel="noopener">矩阵分解在协同过滤推荐算法中的应用</a></li>
-<li>2017年1月25日        <a href="https://www.cnblogs.com/pinard/p/6349233.html" target="_blank" rel="noopener">协同过滤推荐算法总结</a></li>
-<li>2017年1月22日        <a href="https://www.cnblogs.com/pinard/p/6340162.html" target="_blank" rel="noopener">用Spark学习FP Tree算法和PrefixSpan算法</a></li>
-<li>2017年1月20日        <a href="https://www.cnblogs.com/pinard/p/6323182.html" target="_blank" rel="noopener">PrefixSpan算法原理总结</a></li>
-<li>2017年1月19日        <a href="https://www.cnblogs.com/pinard/p/6307064.html" target="_blank" rel="noopener">FP Tree算法原理总结</a></li>
-<li>2017年1月17日        <a href="https://www.cnblogs.com/pinard/p/6293298.html" target="_blank" rel="noopener">Apriori算法原理总结</a></li>
-<li>2017年1月16日        <a href="https://www.cnblogs.com/pinard/p/6288716.html" target="_blank" rel="noopener">典型关联分析(CCA)原理总结</a></li>
-</ol>
-<hr>
-<p>Page    7</p>
-<ol>
-<li>2017年1月11日        <a href="https://www.cnblogs.com/pinard/p/6273377.html" target="_blank" rel="noopener">用scikit-learn研究局部线性嵌入(LLE)</a></li>
-<li>2017年1月10日        <a href="https://www.cnblogs.com/pinard/p/6266408.html" target="_blank" rel="noopener">局部线性嵌入(LLE)原理总结</a></li>
-<li>2017年1月5日        <a href="https://www.cnblogs.com/pinard/p/6251584.html" target="_blank" rel="noopener">奇异值分解(SVD)原理与在降维中的应用</a></li>
-<li>2017年1月4日        <a href="https://www.cnblogs.com/pinard/p/6249328.html" target="_blank" rel="noopener">用scikit-learn进行LDA降维</a></li>
-<li>2017年1月3日        <a href="https://www.cnblogs.com/pinard/p/6244265.html" target="_blank" rel="noopener">线性判别分析LDA原理总结</a></li>
-<li>2017年1月2日        <a href="https://www.cnblogs.com/pinard/p/6243025.html" target="_blank" rel="noopener">用scikit-learn学习主成分分析(PCA)</a></li>
-<li>2016年12月31日        <a href="https://www.cnblogs.com/pinard/p/6239403.html" target="_blank" rel="noopener">主成分分析（PCA）原理总结</a></li>
-<li>2016年12月30日        <a href="https://www.cnblogs.com/pinard/p/6235920.html" target="_blank" rel="noopener">用scikit-learn学习谱聚类</a></li>
-<li>2016年12月29日        <a href="https://www.cnblogs.com/pinard/p/6221564.html" target="_blank" rel="noopener">谱聚类（spectral clustering）原理总结</a></li>
-<li>2016年12月24日        <a href="https://www.cnblogs.com/pinard/p/6217852.html" target="_blank" rel="noopener">用scikit-learn学习DBSCAN聚类</a></li>
-</ol>
-<hr>
-<p>Page    8</p>
-<ol>
-<li>2016年12月22日        <a href="https://www.cnblogs.com/pinard/p/6208966.html" target="_blank" rel="noopener">DBSCAN密度聚类算法</a></li>
-<li>2016年12月19日        <a href="https://www.cnblogs.com/pinard/p/6200579.html" target="_blank" rel="noopener">用scikit-learn学习BIRCH聚类</a></li>
-<li>2016年12月14日        <a href="https://www.cnblogs.com/pinard/p/6179132.html" target="_blank" rel="noopener">BIRCH聚类算法原理</a></li>
-<li>2016年12月13日        <a href="https://www.cnblogs.com/pinard/p/6169370.html" target="_blank" rel="noopener">用scikit-learn学习K-Means聚类</a></li>
-<li>2016年12月12日        <a href="https://www.cnblogs.com/pinard/p/6164214.html" target="_blank" rel="noopener">K-Means聚类算法原理</a></li>
-<li>2016年12月11日        <a href="https://www.cnblogs.com/pinard/p/6160412.html" target="_blank" rel="noopener">scikit-learn随机森林调参小结</a></li>
-<li>2016年12月10日        <a href="https://www.cnblogs.com/pinard/p/6156009.html" target="_blank" rel="noopener">Bagging与随机森林算法原理小结</a></li>
-<li>2016年12月9日        <a href="https://www.cnblogs.com/pinard/p/6143927.html" target="_blank" rel="noopener">scikit-learn 梯度提升树(GBDT)调参小结</a></li>
-<li>2016年12月7日        <a href="https://www.cnblogs.com/pinard/p/6140514.html" target="_blank" rel="noopener">梯度提升树(GBDT)原理小结</a></li>
-<li>2016年12月6日        <a href="https://www.cnblogs.com/pinard/p/6136914.html" target="_blank" rel="noopener">scikit-learn Adaboost类库使用小结</a></li>
-</ol>
-<hr>
-<p>Page    9</p>
-<ol>
-<li>2016年12月5日        <a href="https://www.cnblogs.com/pinard/p/6133937.html" target="_blank" rel="noopener">集成学习之Adaboost算法原理小结</a></li>
-<li>2016年12月4日        <a href="https://www.cnblogs.com/pinard/p/6131423.html" target="_blank" rel="noopener">集成学习原理小结</a></li>
-<li>2016年12月2日        <a href="https://www.cnblogs.com/pinard/p/6126077.html" target="_blank" rel="noopener">支持向量机高斯核调参小结</a></li>
-<li>2016年11月30日        <a href="https://www.cnblogs.com/pinard/p/6117515.html" target="_blank" rel="noopener">scikit-learn 支持向量机算法库使用小结</a></li>
-<li>2016年11月29日        <a href="https://www.cnblogs.com/pinard/p/6113120.html" target="_blank" rel="noopener">支持向量机原理(五)线性支持回归</a></li>
-<li>2016年11月26日        <a href="https://www.cnblogs.com/pinard/p/6111471.html" target="_blank" rel="noopener">支持向量机原理(四)SMO算法原理</a></li>
-<li>2016年11月25日        <a href="https://www.cnblogs.com/pinard/p/6103615.html" target="_blank" rel="noopener">支持向量机原理(三)线性不可分支持向量机与核函数</a></li>
-<li>2016年11月24日        <a href="https://www.cnblogs.com/pinard/p/6100722.html" target="_blank" rel="noopener">支持向量机原理(二) 线性支持向量机的软间隔最大化模型</a></li>
-<li>2016年11月23日        <a href="https://www.cnblogs.com/pinard/p/6097604.html" target="_blank" rel="noopener">支持向量机原理(一) 线性支持向量机</a></li>
-</ol>
-<hr>
-<p>Page    10</p>
-<ol>
-<li>2016年11月17日        <a href="https://www.cnblogs.com/pinard/p/6074222.html" target="_blank" rel="noopener">scikit-learn 朴素贝叶斯类库使用小结</a></li>
-<li>2016年11月16日        <a href="https://www.cnblogs.com/pinard/p/6069267.html" target="_blank" rel="noopener">朴素贝叶斯算法原理小结</a></li>
-<li>2016年11月15日        <a href="https://www.cnblogs.com/pinard/p/6065607.html" target="_blank" rel="noopener">scikit-learn K近邻法类库使用小结</a></li>
-<li>2016年11月14日        <a href="https://www.cnblogs.com/pinard/p/6061661.html" target="_blank" rel="noopener">K近邻法(KNN)原理小结</a></li>
-<li>2016年11月12日        <a href="https://www.cnblogs.com/pinard/p/6056319.html" target="_blank" rel="noopener">scikit-learn决策树算法类库使用小结</a></li>
-<li>2016年11月11日        <a href="https://www.cnblogs.com/pinard/p/6053344.html" target="_blank" rel="noopener">决策树算法原理(下)</a></li>
-<li>2016年11月10日        <a href="https://www.cnblogs.com/pinard/p/6050306.html" target="_blank" rel="noopener">决策树算法原理(上)</a></li>
-<li>2016年11月9日        <a href="https://www.cnblogs.com/pinard/p/6047802.html" target="_blank" rel="noopener">机器学习算法的随机数据生成</a></li>
-<li>2016年11月8日        <a href="https://www.cnblogs.com/pinard/p/6042320.html" target="_blank" rel="noopener">感知机原理小结</a></li>
-<li>2016年11月7日        <a href="https://www.cnblogs.com/pinard/p/6039099.html" target="_blank" rel="noopener">日志和告警数据挖掘经验谈</a></li>
-</ol>
-<hr>
-<p>Page    11</p>
-<ol>
-<li>2016年11月6日        <a href="https://www.cnblogs.com/pinard/p/6035872.html" target="_blank" rel="noopener">scikit-learn 逻辑回归类库使用小结</a></li>
-<li>2016年11月4日        <a href="https://www.cnblogs.com/pinard/p/6029432.html" target="_blank" rel="noopener">逻辑回归原理小结</a></li>
-<li>2016年11月3日        <a href="https://www.cnblogs.com/pinard/p/6026343.html" target="_blank" rel="noopener">scikit-learn 线性回归算法库小结</a></li>
-<li>2016年11月2日        <a href="https://www.cnblogs.com/pinard/p/6023000.html" target="_blank" rel="noopener">用scikit-learn和pandas学习Ridge回归</a></li>
-<li>2016年11月1日        <a href="https://www.cnblogs.com/pinard/p/6018889.html" target="_blank" rel="noopener">Lasso回归算法： 坐标轴下降法与最小角回归法小结</a></li>
-<li>2016年10月31日        <a href="https://www.cnblogs.com/pinard/p/6016029.html" target="_blank" rel="noopener">用scikit-learn和pandas学习线性回归</a></li>
-<li>2016年10月30日        <a href="https://www.cnblogs.com/pinard/p/6013484.html" target="_blank" rel="noopener">scikit-learn 和pandas 基于windows单机机器学习环境的搭建</a></li>
-<li>2016年10月28日        <a href="https://www.cnblogs.com/pinard/p/6007200.html" target="_blank" rel="noopener">机器学习研究与开发平台的选择</a></li>
-<li>2016年10月24日        <a href="https://www.cnblogs.com/pinard/p/6004041.html" target="_blank" rel="noopener">线性回归原理小结</a></li>
-</ol>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/24/sohu-news-classification/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2381,13 +1995,192 @@ dtype: object
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/11/Hello-hexo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Friedman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Friedman's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/11/Hello-hexo/" itemprop="url">Bagging和Boosting的概念与区别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-11T23:31:23+08:00">
+                2018-06-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ensemble-method/" itemprop="url" rel="index">
+                    <span itemprop="name">ensemble method</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  887 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长&asymp;</span>
+                
+                <span title="阅读时长">
+                  3 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="Bagging和Boosting的概念与区别"><a href="#Bagging和Boosting的概念与区别" class="headerlink" title="Bagging和Boosting的概念与区别"></a>Bagging和Boosting的概念与区别</h2><h3 id="随机森林属于集成学习-ensemble-learning-中的bagging算法，在集成算法中主要分为bagging算法与boosting算法"><a href="#随机森林属于集成学习-ensemble-learning-中的bagging算法，在集成算法中主要分为bagging算法与boosting算法" class="headerlink" title="随机森林属于集成学习(ensemble learning)中的bagging算法，在集成算法中主要分为bagging算法与boosting算法"></a>随机森林属于集成学习(ensemble learning)中的bagging算法，在集成算法中主要分为bagging算法与boosting算法</h3><hr>
+<h4 id="Bagging算法-套袋法，bootstrap-aggregating"><a href="#Bagging算法-套袋法，bootstrap-aggregating" class="headerlink" title="Bagging算法(套袋法，bootstrap aggregating)"></a>Bagging算法(套袋法，bootstrap aggregating)</h4><ul>
+<li>bagging的算法过程如下：</li>
+<li>从原始样本集中使用Bootstraping 方法随机抽取n个训练样本，共进行k轮抽取，得到k个训练集（k个训练集之间相互独立，元素可以有重复）。</li>
+<li>对于n个训练集，我们训练k个模型，（这个模型可根据具体的情况而定，可以是决策树，knn等）</li>
+<li>对于分类问题：由投票表决产生的分类结果；对于回归问题，由k个模型预测结果的均值作为最后预测的结果（所有模型的重要性相同）。</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/06/11/Hello-hexo/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
-
 
 
           </div>
@@ -2431,7 +2224,7 @@ dtype: object
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
