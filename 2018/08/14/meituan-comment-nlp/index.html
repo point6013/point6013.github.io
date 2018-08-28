@@ -79,22 +79,22 @@
 
 
 
-<meta name="description" content="美团店铺评价语言处理以及分类（NLP） 上两篇博客中介绍了美团店铺的订单信息以及数据分析以及可视化 其中还有一部分评论文本信息并没有提及到，自然也就有了这篇 主要用到的包有jieba，sklearn，pandas 本篇博文主要先用的是词袋模型(bag of words),将文本以数值特征向量的形式来表示(每个文档构建一个特征向量，有很多的0，类似于前文说的category类的one-hot形式，得">
+<meta name="description" content="美团店铺评价语言处理以及分类（NLP） 上两篇博客中介绍了美团店铺的订单信息以及数据分析以及可视化 其中还有一部分评论文本信息并没有提及到，自然也就有了这篇 主要用到的包有jieba，sklearn，pandas 本篇博文主要先用的是词袋模型(bag of words),将文本以数值特征向量的形式来表示(每个文档构建一个特征向量，有很多的0，出现在特征向量中的值也叫做原始词频，tf(term fr">
 <meta name="keywords" content="nlp,naive bayes">
 <meta property="og:type" content="article">
 <meta property="og:title" content="meituan_comment_nlp">
 <meta property="og:url" content="http://yoursite.com/2018/08/14/meituan-comment-nlp/index.html">
 <meta property="og:site_name" content="Friedman&#39;s blog">
-<meta property="og:description" content="美团店铺评价语言处理以及分类（NLP） 上两篇博客中介绍了美团店铺的订单信息以及数据分析以及可视化 其中还有一部分评论文本信息并没有提及到，自然也就有了这篇 主要用到的包有jieba，sklearn，pandas 本篇博文主要先用的是词袋模型(bag of words),将文本以数值特征向量的形式来表示(每个文档构建一个特征向量，有很多的0，类似于前文说的category类的one-hot形式，得">
+<meta property="og:description" content="美团店铺评价语言处理以及分类（NLP） 上两篇博客中介绍了美团店铺的订单信息以及数据分析以及可视化 其中还有一部分评论文本信息并没有提及到，自然也就有了这篇 主要用到的包有jieba，sklearn，pandas 本篇博文主要先用的是词袋模型(bag of words),将文本以数值特征向量的形式来表示(每个文档构建一个特征向量，有很多的0，出现在特征向量中的值也叫做原始词频，tf(term fr">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1fu9bm7nc6tj20qm0bijtc.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1fu9c1rlvn1j20mo05c74b.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1fu9c4y3h26j20u5057wem.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1fu9l64amzrj208807vq2x.jpg">
-<meta property="og:updated_time" content="2018-08-15T02:29:04.850Z">
+<meta property="og:updated_time" content="2018-08-28T07:59:18.001Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="meituan_comment_nlp">
-<meta name="twitter:description" content="美团店铺评价语言处理以及分类（NLP） 上两篇博客中介绍了美团店铺的订单信息以及数据分析以及可视化 其中还有一部分评论文本信息并没有提及到，自然也就有了这篇 主要用到的包有jieba，sklearn，pandas 本篇博文主要先用的是词袋模型(bag of words),将文本以数值特征向量的形式来表示(每个文档构建一个特征向量，有很多的0，类似于前文说的category类的one-hot形式，得">
+<meta name="twitter:description" content="美团店铺评价语言处理以及分类（NLP） 上两篇博客中介绍了美团店铺的订单信息以及数据分析以及可视化 其中还有一部分评论文本信息并没有提及到，自然也就有了这篇 主要用到的包有jieba，sklearn，pandas 本篇博文主要先用的是词袋模型(bag of words),将文本以数值特征向量的形式来表示(每个文档构建一个特征向量，有很多的0，出现在特征向量中的值也叫做原始词频，tf(term fr">
 <meta name="twitter:image" content="http://ww1.sinaimg.cn/large/9ebd4c2bgy1fu9bm7nc6tj20qm0bijtc.jpg">
 
 
@@ -395,7 +395,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,744 字
+                  1,751 字
                 </span>
               
 
@@ -436,7 +436,7 @@
 <li>上两篇博客中介绍了美团店铺的订单信息以及数据分析以及可视化</li>
 <li>其中还有一部分评论文本信息并没有提及到，自然也就有了这篇</li>
 <li>主要用到的包有jieba，sklearn，pandas</li>
-<li>本篇博文主要先用的是词袋模型(bag of words),将文本以数值特征向量的形式来表示(每个文档构建一个特征向量，有很多的0，类似于前文说的category类的one-hot形式，得到的矩阵为稀疏矩阵)</li>
+<li>本篇博文主要先用的是词袋模型(bag of words),将文本以数值特征向量的形式来表示(每个文档构建一个特征向量，有很多的0，出现在特征向量中的值也叫做原始词频，tf(term frequency), 得到的矩阵为稀疏矩阵)</li>
 </ul>
 <h4 id="导入数据分析常用库"><a href="#导入数据分析常用库" class="headerlink" title="导入数据分析常用库"></a>导入数据分析常用库</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
 <ul>
@@ -686,7 +686,7 @@ avg / total       0.86      0.86      0.85      3138
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
