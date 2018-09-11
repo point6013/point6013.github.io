@@ -306,6 +306,190 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/02/data-processing-pandas/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Friedman">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Friedman's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/02/data-processing-pandas/" itemprop="url">pandas data processing</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-02T16:00:37+08:00">
+                2018-08-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/pandas/" itemprop="url" rel="index">
+                    <span itemprop="name">pandas</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,362 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长&asymp;</span>
+                
+                <span title="阅读时长">
+                  6 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="category-type-data-in-pandas"><a href="#category-type-data-in-pandas" class="headerlink" title="category type data in pandas"></a>category type data in pandas</h3><ul>
+<li>实际应用pandas过程中，经常会用到category数据类型，通常以text的形式显示，包括颜色（红，绿，蓝），尺寸的大小（大，中，小），还有地理信息等（国家，省份），这些数据的处理经常会有各种各样的问题，pandas以及scikit-learn两个包可以将category数据转化为合适的数值型格式，这篇主要介绍通过这两个包处理category类型的数据转化为数值类型，也就是encoding的过程。</li>
+<li>数据来源<a href="http://mlr.cs.umass.edu/ml/index.html" target="_blank" rel="noopener">UCI Machine Learning Repository</a>，这个数据集中包含了很多的category类型的数据，可以从链接汇总查看数据的代表的含义。</li>
+<li>下面开始导入需要用到的包</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 规定一下数据列的各个名称，</span></span><br><span class="line">headers = [<span class="string">"symboling"</span>, <span class="string">"normalized_losses"</span>, <span class="string">"make"</span>, <span class="string">"fuel_type"</span>, <span class="string">"aspiration"</span>,</span><br><span class="line">           <span class="string">"num_doors"</span>, <span class="string">"body_style"</span>, <span class="string">"drive_wheels"</span>, <span class="string">"engine_location"</span>,</span><br><span class="line">           <span class="string">"wheel_base"</span>, <span class="string">"length"</span>, <span class="string">"width"</span>, <span class="string">"height"</span>, <span class="string">"curb_weight"</span>,</span><br><span class="line">           <span class="string">"engine_type"</span>, <span class="string">"num_cylinders"</span>, <span class="string">"engine_size"</span>, <span class="string">"fuel_system"</span>,</span><br><span class="line">           <span class="string">"bore"</span>, <span class="string">"stroke"</span>, <span class="string">"compression_ratio"</span>, <span class="string">"horsepower"</span>, <span class="string">"peak_rpm"</span>,</span><br><span class="line">           <span class="string">"city_mpg"</span>, <span class="string">"highway_mpg"</span>, <span class="string">"price"</span>]</span><br><span class="line"><span class="comment"># 从pandas导入csv文件，将?标记为NaN缺失值</span></span><br><span class="line">df=pd.read_csv(<span class="string">"http://mlr.cs.umass.edu/ml/machine-learning-databases/autos/imports-85.data"</span>,header=<span class="keyword">None</span>,names=headers,na_values=<span class="string">"?"</span>)</span><br><span class="line">df.head()</span><br></pre></td></tr></table></figure>
+<p><img src="http://ww1.sinaimg.cn/large/9ebd4c2bgy1ftvf3plqefj215n0ci75u.jpg" alt=""></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/02/data-processing-pandas/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/02/数据类型转化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1073,7 +1257,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1095,7 +1279,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
